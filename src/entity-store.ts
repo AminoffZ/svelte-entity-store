@@ -9,6 +9,7 @@ import { setEntities } from './internal/set-entities'
 import { updateEntities } from './internal/update-entities'
 import type { Entity, GetID, ID, Predicate } from './shared'
 import { getActiveEntityId } from './internal/get-active-entity-id'
+import { setActiveEntity } from './internal/set-active-entity'
 
 declare type Invalidator<T> = (value?: T) => void
 declare type Subscribe<T> = (this: void, run: Subscriber<T>, invalidate?: Invalidator<T>) => Unsubscriber
@@ -118,6 +119,13 @@ export type EntityStore<T extends Entity> = {
     set(entities: T | T[]): void
 
     /**
+     * Sets the active entity.
+     *
+     * @param The Entity itself or the ID of the entity to set as active
+     */
+    setActive(entity: ID | T): void
+
+    /**
      * See (Svelte's docs)[https://svelte.dev/docs#svelte_store] for details on the Store contract and `subscribe` function.
      */
     subscribe: Subscribe<Normalized<T>>
@@ -218,6 +226,10 @@ export function entityStore<T extends Entity>(getID: GetID<T>, initial: T[] = []
         return derived(store, getActiveEntityId<T>())
     }
 
+    function setActive(entity: ID | T): void {
+        derived(store, setActiveEntity<T>(getID)(entity))
+    }
+
     function remove(id: ID): void
     function remove(ids: ID[]): void
     function remove(entity: T): void
@@ -246,5 +258,6 @@ export function entityStore<T extends Entity>(getID: GetID<T>, initial: T[] = []
         update,
         getActive,
         getActiveId,
+        setActive,
     }
 }
