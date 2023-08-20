@@ -1,10 +1,10 @@
 import type { Normalized } from './normalize'
-import type { ID, Predicate } from '../shared'
+import type { Entity, ID, Predicate } from '../shared'
 
 /**
  * Gets an array of all entities in the state
  */
-export function getEntities<T>(): (state: Normalized<T>) => T[]
+export function getEntities<T extends Entity>(): (state: Normalized<T>) => T[]
 
 /**
  * Finds an entity by ID
@@ -12,7 +12,7 @@ export function getEntities<T>(): (state: Normalized<T>) => T[]
  * @param id ID of the entity to find
  * @returns Entity object if found, undefined otherwise
  */
-export function getEntities<T>(id: ID): (state: Normalized<T>) => T | undefined
+export function getEntities<T extends Entity>(id: ID): (state: Normalized<T>) => T | undefined
 
 /**
  * Finds multiple entities by ID. Note that IDs will be ignored if the entity isn't found,
@@ -21,7 +21,7 @@ export function getEntities<T>(id: ID): (state: Normalized<T>) => T | undefined
  * @param ids Array of IDs to find
  * @returns Array of found entities
  */
-export function getEntities<T>(ids: ID[]): (state: Normalized<T>) => T[]
+export function getEntities<T extends Entity>(ids: ID[]): (state: Normalized<T>) => T[]
 
 /**
  * Finds all entities that match the filter function.
@@ -29,9 +29,9 @@ export function getEntities<T>(ids: ID[]): (state: Normalized<T>) => T[]
  * @param pred Filter function
  * @returns Array of entities matching the filter function
  */
-export function getEntities<T>(pred: Predicate<T>): (state: Normalized<T>) => T[]
+export function getEntities<T extends Entity>(pred: Predicate<T>): (state: Normalized<T>) => T[]
 
-export function getEntities<T>(input?: ID | ID[] | Predicate<T>) {
+export function getEntities<T extends Entity>(input?: ID | ID[] | Predicate<T>) {
     return function (state: Normalized<T>): T | T[] {
         if (!input) {
             return state.allIds.map((id) => state.byId[id])

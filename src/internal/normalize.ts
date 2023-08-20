@@ -1,9 +1,9 @@
-import { GetID, ID } from '../shared'
+import { Entity, GetID, ID } from '../shared'
 
 /**
  * Normalized state tracking entities by ID
  */
-export type Normalized<T> = {
+export type Normalized<T extends Entity> = {
     /**
      * Map of entities by ID. EntityStore supports `string` and `number` ID types
      */
@@ -15,6 +15,10 @@ export type Normalized<T> = {
      * List of all entities IDs, sorted in the order they were added
      */
     allIds: ID[]
+    /**
+     * ID of the active entity
+     */
+    activeId?: ID | undefined
 }
 
 /**
@@ -24,16 +28,18 @@ export type Normalized<T> = {
  * @param getID Function that returns the ID of an entity
  * @returns Noramlized state holding the given items
  */
-export const normalize = <T>(getID: GetID<T>) => (items: T[]): Normalized<T> => {
+export const normalize = <T extends Entity>(getID: GetID<T>) => (items: T[]): Normalized<T> => {
     return items.reduce(
-        ({ byId, allIds }, next) => {
+        ({ byId, allIds, activeId }, next) => {
             const id = getID(next)
-
+            if (next?.active) {
+                activeId = id
+            }
             byId[id] = next
             allIds.push(id)
 
-            return { byId, allIds }
+            return { byId, allIds, activeId }
         },
-        { byId: {}, allIds: [] } as Normalized<T>,
+        { byId: {}, allIds: [], activeId: undefined } as Normalized<T>,
     )
 }

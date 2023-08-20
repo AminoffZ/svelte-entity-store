@@ -1,11 +1,11 @@
-const sander = require('sander');
-const glob = require('tiny-glob/sync');
+const sander = require('sander')
+const glob = require('tiny-glob/sync')
 
 for (const file of glob('src/**/*.js')) {
-    sander.unlinkSync(file);
+    sander.unlinkSync(file)
 }
 
-sander.rimrafSync('types');
+sander.rimrafSync('types')
 for (const file of glob('src/**/*.d.ts')) {
-    sander.renameSync(file).to(file.replace(/^src/, 'types'));
+    sander.renameSync(file).to(file.replace(/^src/, 'types'))
 }

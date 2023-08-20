@@ -1,8 +1,8 @@
 import { getEntities } from './get-entities'
 import type { Normalized } from './normalize'
-import { GetID, ID, isID, Predicate } from '../shared'
+import { Entity, GetID, ID, isID, Predicate } from '../shared'
 
-export function removeEntities<T>(
+export function removeEntities<T extends Entity>(
     getId: GetID<T>,
 ): (input: ID | ID[] | T | T[] | Predicate<T>) => (state: Normalized<T>) => Normalized<T> {
     /**
@@ -55,18 +55,20 @@ export function removeEntities<T>(
             }
 
             return toRemove.reduce(
-                ({ byId, allIds }, next) => {
+                ({ byId, allIds, activeId }, next) => {
                     const id = getId(next)
                     delete byId[id]
 
                     return {
                         byId,
                         allIds: allIds.filter((i) => i !== id),
+                        activeId: activeId === id ? undefined : activeId,
                     }
                 },
                 {
                     byId: { ...state.byId },
                     allIds: [...state.allIds],
+                    activeId: state.activeId,
                 },
             )
         }

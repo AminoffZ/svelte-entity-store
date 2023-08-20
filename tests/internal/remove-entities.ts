@@ -3,14 +3,14 @@ import * as assert from 'uvu/assert'
 import { removeEntities } from '../../src/internal/remove-entities'
 import { Normalized } from '../../src/internal/normalize'
 
-type Entity = {
+type TestEntity = {
     id: string
     description: string
     completed: boolean
 }
 
-const getId = (e: Entity) => e.id
-const isCompleted = (e: Entity) => e.completed
+const getId = (e: TestEntity) => e.id
+const isCompleted = (e: TestEntity) => e.completed
 
 const removeEntitiesT = removeEntities(getId)
 
@@ -19,7 +19,7 @@ test('is a function', () => {
 })
 
 test('accepts a single ID', () => {
-    const state: Normalized<Entity> = {
+    const state: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false },
         },
@@ -27,11 +27,11 @@ test('accepts a single ID', () => {
     }
     const result = removeEntitiesT('abc')(state)
 
-    assert.equal(result, { byId: {}, allIds: [] })
+    assert.equal(result, { byId: {}, allIds: [], activeId: undefined })
 })
 
 test('accepts an array of IDs', () => {
-    const state: Normalized<Entity> = {
+    const state: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false },
             def: { id: 'def', description: 'item 2', completed: false },
@@ -46,17 +46,19 @@ test('accepts an array of IDs', () => {
             def: state.byId.def,
         },
         allIds: ['def'],
+        activeId: undefined,
     })
 })
 
 test('accepts an entity object', () => {
-    const state: Normalized<Entity> = {
+    const state: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false },
             def: { id: 'def', description: 'item 2', completed: false },
             ghi: { id: 'ghi', description: 'item 3', completed: true },
         },
         allIds: ['abc', 'def', 'ghi'],
+        activeId: undefined,
     }
     const result = removeEntitiesT(state.byId.abc)(state)
 
@@ -66,11 +68,12 @@ test('accepts an entity object', () => {
             ghi: state.byId.ghi,
         },
         allIds: ['def', 'ghi'],
+        activeId: undefined,
     })
 })
 
 test('accepts an array of entity objects', () => {
-    const state: Normalized<Entity> = {
+    const state: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false },
             def: { id: 'def', description: 'item 2', completed: false },
@@ -85,11 +88,12 @@ test('accepts an array of entity objects', () => {
             def: state.byId.def,
         },
         allIds: ['def'],
+        activeId: undefined,
     })
 })
 
 test('accepts a filter function', () => {
-    const state: Normalized<Entity> = {
+    const state: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: true },
             def: { id: 'def', description: 'item 2', completed: false },
@@ -104,15 +108,17 @@ test('accepts a filter function', () => {
             def: state.byId.def,
         },
         allIds: ['def'],
+        activeId: undefined,
     })
 })
 
 test('ignores unknown ID', () => {
-    const state: Normalized<Entity> = {
+    const state: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false },
         },
         allIds: ['abc'],
+        activeId: undefined,
     }
     const result = removeEntitiesT('def')(state)
 
@@ -120,7 +126,7 @@ test('ignores unknown ID', () => {
 })
 
 test('ignores unknown IDs in an array', () => {
-    const state: Normalized<Entity> = {
+    const state: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false },
             def: { id: 'def', description: 'item 2', completed: false },
@@ -136,15 +142,17 @@ test('ignores unknown IDs in an array', () => {
             def: state.byId.def,
         },
         allIds: ['abc', 'def'],
+        activeId: undefined,
     })
 })
 
 test('ignores an unknown entity', () => {
-    const state: Normalized<Entity> = {
+    const state: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false },
         },
         allIds: ['abc'],
+        activeId: undefined,
     }
     const result = removeEntitiesT({
         id: 'def',
@@ -156,13 +164,14 @@ test('ignores an unknown entity', () => {
 })
 
 test('ignores unknown entities in an array', () => {
-    const state: Normalized<Entity> = {
+    const state: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false },
             def: { id: 'def', description: 'item 2', completed: false },
             ghi: { id: 'ghi', description: 'item 3', completed: true },
         },
         allIds: ['abc', 'def', 'ghi'],
+        activeId: undefined,
     }
     const result = removeEntitiesT([
         {
@@ -179,6 +188,7 @@ test('ignores unknown entities in an array', () => {
             def: state.byId.def,
         },
         allIds: ['abc', 'def'],
+        activeId: undefined,
     })
 })
 

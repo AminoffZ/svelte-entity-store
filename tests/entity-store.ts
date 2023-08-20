@@ -4,15 +4,15 @@ import * as assert from 'uvu/assert'
 import { entityStore } from '../src/entity-store'
 import { Normalized } from '../src/internal/normalize'
 
-type Entity = {
+type TestEntity = {
     id: string
     description: string
     completed: boolean
 }
 
-const getID = (e: Entity) => e.id
-const isCompleted = (e: Entity) => e.completed
-const toggle = (e: Entity) => ({ ...e, completed: !e.completed })
+const getID = (e: TestEntity) => e.id
+const isCompleted = (e: TestEntity) => e.completed
+const toggle = (e: TestEntity) => ({ ...e, completed: !e.completed })
 
 // ---
 
@@ -23,28 +23,29 @@ constructor('is a function', () => {
 })
 
 constructor('returns a subscriber function', () => {
-    const store = entityStore<Entity>(getID)
+    const store = entityStore<TestEntity>(getID)
 
     assert.type(store, 'object')
     assert.type(store.subscribe, 'function')
 })
 
 constructor("doesn't require initial state", () => {
-    const store = entityStore<Entity>(getID)
+    const store = entityStore<TestEntity>(getID)
     const state = svelteGet(store)
 
     assert.equal(state, {
         byId: {},
         allIds: [],
+        activeId: undefined,
     })
 })
 
 constructor('normalizes initial items array', () => {
-    const items: Entity[] = [
+    const items: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
     ]
-    const store = entityStore<Entity>(getID, items)
+    const store = entityStore<TestEntity>(getID, items)
     const state = svelteGet(store)
 
     assert.equal(state, {
@@ -53,6 +54,7 @@ constructor('normalizes initial items array', () => {
             def: items[1],
         },
         allIds: ['abc', 'def'],
+        activeId: undefined,
     })
 })
 
@@ -63,12 +65,12 @@ constructor.run()
 const reset = suite('reset')
 
 reset('is a function', () => {
-    const { reset } = entityStore<Entity>(getID)
+    const { reset } = entityStore<TestEntity>(getID)
     assert.type(reset, 'function')
 })
 
 reset('noop for an empty store', () => {
-    const store = entityStore<Entity>(getID)
+    const store = entityStore<TestEntity>(getID)
     store.reset()
 
     const state = svelteGet(store)
@@ -77,26 +79,26 @@ reset('noop for an empty store', () => {
 })
 
 reset('removes all existing entities', () => {
-    const items: Entity[] = [
+    const items: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
     ]
-    const store = entityStore<Entity>(getID, items)
+    const store = entityStore<TestEntity>(getID, items)
     store.reset()
 
     const state = svelteGet(store)
 
-    assert.equal(state, { byId: {}, allIds: [] })
+    assert.equal(state, { byId: {}, allIds: [], activeId: undefined })
 })
 
 reset("doesn't trigger subscribers for empty store", () => {
-    const store = entityStore<Entity>(getID)
+    const store = entityStore<TestEntity>(getID)
 
-    let states: Normalized<Entity>[]
+    let states: Normalized<TestEntity>[]
     const unsubscribe = store.subscribe((state) => states.push(state))
 
     store.reset()
-
+    //@ts-ignore
     assert.is(states.length, 1)
 
     unsubscribe()
@@ -107,13 +109,13 @@ reset("doesn't trigger subscribers for empty store", () => {
 const set = suite('set')
 
 set('is a function', () => {
-    const { set } = entityStore<Entity>(getID)
+    const { set } = entityStore<TestEntity>(getID)
     assert.type(set, 'function')
 })
 
 set('accepts a single entity', () => {
-    const store = entityStore<Entity>(getID)
-    const entity: Entity = { id: 'abc', description: 'item 1', completed: false }
+    const store = entityStore<TestEntity>(getID)
+    const entity: TestEntity = { id: 'abc', description: 'item 1', completed: false }
 
     store.set(entity)
 
@@ -124,12 +126,13 @@ set('accepts a single entity', () => {
             abc: entity,
         },
         allIds: ['abc'],
+        activeId: undefined,
     })
 })
 
 set('accepts an array of entities', () => {
-    const store = entityStore<Entity>(getID)
-    const entities: Entity[] = [
+    const store = entityStore<TestEntity>(getID)
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
     ]
@@ -144,15 +147,16 @@ set('accepts an array of entities', () => {
             def: entities[1],
         },
         allIds: ['abc', 'def'],
+        activeId: undefined,
     })
 })
 
 set('updates an existing entity', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
     store.set({ ...entities[0], completed: true })
 
@@ -164,17 +168,18 @@ set('updates an existing entity', () => {
             def: entities[1],
         },
         allIds: ['abc', 'def'],
+        activeId: undefined,
     })
 })
 
 set('handles a combination of new and existing entities', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
-    const input: Entity[] = [
+    const input: TestEntity[] = [
         { ...entities[0], completed: true },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
@@ -190,22 +195,23 @@ set('handles a combination of new and existing entities', () => {
             ghi: input[1],
         },
         allIds: ['abc', 'def', 'ghi'],
+        activeId: undefined,
     })
 })
 
 set('calls subscribers once after all entities are updated', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
-    const input: Entity[] = [
+    const input: TestEntity[] = [
         { ...entities[0], completed: true },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
 
-    const states: Normalized<Entity>[] = []
+    const states: Normalized<TestEntity>[] = []
     const unsubscribe = store.subscribe((state) => states.push(state))
 
     store.set(input)
@@ -217,6 +223,7 @@ set('calls subscribers once after all entities are updated', () => {
                 def: entities[1],
             },
             allIds: ['abc', 'def'],
+            activeId: undefined,
         },
         {
             byId: {
@@ -225,6 +232,7 @@ set('calls subscribers once after all entities are updated', () => {
                 ghi: input[1],
             },
             allIds: ['abc', 'def', 'ghi'],
+            activeId: undefined,
         },
     ])
 
@@ -232,13 +240,13 @@ set('calls subscribers once after all entities are updated', () => {
 })
 
 set("doesn't call subscribers if an empty array was provided", () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
-    const states: Normalized<Entity>[] = []
+    const states: Normalized<TestEntity>[] = []
     const unsubscribe = store.subscribe((state) => states.push(state))
 
     store.set([])
@@ -250,6 +258,7 @@ set("doesn't call subscribers if an empty array was provided", () => {
                 def: entities[1],
             },
             allIds: ['abc', 'def'],
+            activeId: undefined,
         },
     ])
 
@@ -263,17 +272,17 @@ set.run()
 const get = suite('get')
 
 get('is a function', () => {
-    const { get } = entityStore<Entity>(getID)
+    const { get } = entityStore<TestEntity>(getID)
     assert.type(get, 'function')
 })
 
 get('accepts no params', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const { get } = entityStore<Entity>(getID, entities)
+    const { get } = entityStore<TestEntity>(getID, entities)
 
     const $entities = get()
     const state = svelteGet($entities)
@@ -282,7 +291,7 @@ get('accepts no params', () => {
 })
 
 get('accepts a single ID', () => {
-    const { get } = entityStore<Entity>(getID)
+    const { get } = entityStore<TestEntity>(getID)
     const $entity = get('abc')
 
     const state = svelteGet($entity)
@@ -292,7 +301,7 @@ get('accepts a single ID', () => {
 })
 
 get('accepts an array of IDs', () => {
-    const { get } = entityStore<Entity>(getID)
+    const { get } = entityStore<TestEntity>(getID)
     const $entities = get(['abc', 'def'])
 
     const state = svelteGet($entities)
@@ -302,7 +311,7 @@ get('accepts an array of IDs', () => {
 })
 
 get('accepts a filter function', () => {
-    const { get } = entityStore<Entity>(getID)
+    const { get } = entityStore<TestEntity>(getID)
     const $entities = get(isCompleted)
 
     const state = svelteGet($entities)
@@ -312,8 +321,8 @@ get('accepts a filter function', () => {
 })
 
 get('returns a known entity by ID', () => {
-    const entity: Entity = { id: 'abc', description: 'item 1', completed: false }
-    const { get } = entityStore<Entity>(getID, [entity])
+    const entity: TestEntity = { id: 'abc', description: 'item 1', completed: false }
+    const { get } = entityStore<TestEntity>(getID, [entity])
 
     const $entity = get(entity.id)
     const state = svelteGet($entity)
@@ -322,12 +331,12 @@ get('returns a known entity by ID', () => {
 })
 
 get('returns all known entities for given IDs', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const { get } = entityStore<Entity>(getID, entities)
+    const { get } = entityStore<TestEntity>(getID, entities)
 
     const $entities = get(['abc', 'ghi'])
     const state = svelteGet($entities)
@@ -336,12 +345,12 @@ get('returns all known entities for given IDs', () => {
 })
 
 get('ignores unknown IDs', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const { get } = entityStore<Entity>(getID, entities)
+    const { get } = entityStore<TestEntity>(getID, entities)
 
     const $entities = get(['abc', 'jkl', 'ghi'])
     const state = svelteGet($entities)
@@ -350,12 +359,12 @@ get('ignores unknown IDs', () => {
 })
 
 get('returns all entities matching the filter', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const { get } = entityStore<Entity>(getID, entities)
+    const { get } = entityStore<TestEntity>(getID, entities)
 
     const $entities = get(isCompleted)
     const state = svelteGet($entities)
@@ -364,12 +373,12 @@ get('returns all entities matching the filter', () => {
 })
 
 get('returns an empty array if no entities match the filter', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: false },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const { get } = entityStore<Entity>(getID, entities)
+    const { get } = entityStore<TestEntity>(getID, entities)
 
     const $entities = get(isCompleted)
     const state = svelteGet($entities)
@@ -378,16 +387,16 @@ get('returns an empty array if no entities match the filter', () => {
 })
 
 get('updates subscribers when entity is removed', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
     const $entity = store.get('abc')
 
-    const states: Array<Entity | undefined> = []
+    const states: Array<TestEntity | undefined> = []
     const unsubscribe = $entity.subscribe((state) => states.push(state))
 
     store.reset()
@@ -404,28 +413,28 @@ get.run()
 const remove = suite('remove')
 
 remove('is a function', () => {
-    const { remove } = entityStore<Entity>(getID)
+    const { remove } = entityStore<TestEntity>(getID)
     assert.type(remove, 'function')
 })
 
 remove('accepts a single ID', () => {
-    const entity: Entity = { id: 'abc', description: 'item 1', completed: false }
-    const store = entityStore<Entity>(getID, [entity])
+    const entity: TestEntity = { id: 'abc', description: 'item 1', completed: false }
+    const store = entityStore<TestEntity>(getID, [entity])
 
     store.remove('abc')
 
     const state = svelteGet(store)
 
-    assert.equal(state, { byId: {}, allIds: [] })
+    assert.equal(state, { byId: {}, allIds: [], activeId: undefined })
 })
 
 remove('accepts an array of IDs', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: false },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
     store.remove(['abc'])
 
@@ -437,27 +446,28 @@ remove('accepts an array of IDs', () => {
             ghi: entities[2],
         },
         allIds: ['def', 'ghi'],
+        activeId: undefined,
     })
 })
 
 remove('accepts a single entity', () => {
-    const entity: Entity = { id: 'abc', description: 'item 1', completed: false }
-    const store = entityStore<Entity>(getID, [entity])
+    const entity: TestEntity = { id: 'abc', description: 'item 1', completed: false }
+    const store = entityStore<TestEntity>(getID, [entity])
 
     store.remove(entity)
 
     const state = svelteGet(store)
 
-    assert.equal(state, { byId: {}, allIds: [] })
+    assert.equal(state, { byId: {}, allIds: [], activeId: undefined })
 })
 
 remove('accepts an array of entities', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: false },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
     store.remove([entities[0]])
 
@@ -469,16 +479,17 @@ remove('accepts an array of entities', () => {
             ghi: entities[2],
         },
         allIds: ['def', 'ghi'],
+        activeId: undefined,
     })
 })
 
 remove('accepts a filter function', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: true },
         { id: 'def', description: 'item 2', completed: false },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
     store.remove(isCompleted)
 
@@ -490,18 +501,19 @@ remove('accepts a filter function', () => {
             ghi: entities[2],
         },
         allIds: ['def', 'ghi'],
+        activeId: undefined,
     })
 })
 
 remove('updates subscribers once', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: true },
         { id: 'def', description: 'item 2', completed: false },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
-    const states: Normalized<Entity>[] = []
+    const states: Normalized<TestEntity>[] = []
     const unsubscribe = store.subscribe((state) => states.push(state))
 
     store.remove(isCompleted)
@@ -514,6 +526,7 @@ remove('updates subscribers once', () => {
                 ghi: entities[2],
             },
             allIds: ['abc', 'def', 'ghi'],
+            activeId: undefined,
         },
         {
             byId: {
@@ -521,6 +534,7 @@ remove('updates subscribers once', () => {
                 ghi: entities[2],
             },
             allIds: ['def', 'ghi'],
+            activeId: undefined,
         },
     ])
 
@@ -534,17 +548,17 @@ remove.run()
 const update = suite('update')
 
 update('is a function', () => {
-    const { update } = entityStore<Entity>(getID)
+    const { update } = entityStore<TestEntity>(getID)
     assert.type(update, 'function')
 })
 
 update('accepts no parameters', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: false },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
     store.update(toggle)
 
@@ -557,16 +571,17 @@ update('accepts no parameters', () => {
             ghi: { id: 'ghi', description: 'item 3', completed: true },
         },
         allIds: ['abc', 'def', 'ghi'],
+        activeId: undefined,
     })
 })
 
 update('accepts a single ID', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: false },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
     store.update(toggle, 'abc')
 
@@ -579,16 +594,17 @@ update('accepts a single ID', () => {
             ghi: entities[2],
         },
         allIds: ['abc', 'def', 'ghi'],
+        activeId: undefined,
     })
 })
 
 update('accepts a single entity', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: false },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
     store.update(toggle, entities[0])
 
@@ -601,16 +617,17 @@ update('accepts a single entity', () => {
             ghi: entities[2],
         },
         allIds: ['abc', 'def', 'ghi'],
+        activeId: undefined,
     })
 })
 
 update('accepts an array of IDs', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: false },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
     store.update(toggle, ['abc', 'ghi'])
 
@@ -623,16 +640,17 @@ update('accepts an array of IDs', () => {
             ghi: { id: 'ghi', description: 'item 3', completed: true },
         },
         allIds: ['abc', 'def', 'ghi'],
+        activeId: undefined,
     })
 })
 
 update('accepts an array of entities', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: false },
         { id: 'ghi', description: 'item 3', completed: false },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
     store.update(toggle, [entities[0], entities[2]])
 
@@ -645,16 +663,17 @@ update('accepts an array of entities', () => {
             ghi: { id: 'ghi', description: 'item 3', completed: true },
         },
         allIds: ['abc', 'def', 'ghi'],
+        activeId: undefined,
     })
 })
 
 update('accepts a filter function', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
         { id: 'ghi', description: 'item 3', completed: true },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
     store.update(toggle, isCompleted)
 
@@ -667,18 +686,19 @@ update('accepts a filter function', () => {
             ghi: { id: 'ghi', description: 'item 3', completed: false },
         },
         allIds: ['abc', 'def', 'ghi'],
+        activeId: undefined,
     })
 })
 
 update('updates subscribers once', () => {
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1', completed: false },
         { id: 'def', description: 'item 2', completed: true },
         { id: 'ghi', description: 'item 3', completed: true },
     ]
-    const store = entityStore<Entity>(getID, entities)
+    const store = entityStore<TestEntity>(getID, entities)
 
-    const states: Normalized<Entity>[] = []
+    const states: Normalized<TestEntity>[] = []
     const unsubscribe = store.subscribe((state) => states.push(state))
 
     store.update(toggle, isCompleted)
@@ -691,6 +711,7 @@ update('updates subscribers once', () => {
                 ghi: entities[2],
             },
             allIds: ['abc', 'def', 'ghi'],
+            activeId: undefined,
         },
         {
             byId: {
@@ -699,6 +720,7 @@ update('updates subscribers once', () => {
                 ghi: { id: 'ghi', description: 'item 3', completed: false },
             },
             allIds: ['abc', 'def', 'ghi'],
+            activeId: undefined,
         },
     ])
 

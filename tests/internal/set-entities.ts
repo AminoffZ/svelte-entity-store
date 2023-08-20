@@ -2,12 +2,12 @@ import { test } from 'uvu'
 import * as assert from 'uvu/assert'
 import { setEntities } from '../../src/internal/set-entities'
 
-type Entity = {
+type TestEntity = {
     id: string
     description: string
 }
 
-const getId = (e: Entity) => e.id
+const getId = (e) => e.id
 
 const setEntitiesT = setEntities(getId)
 
@@ -16,17 +16,17 @@ test('is a function', () => {
 })
 
 test('accepts a single entity', () => {
-    const initial = { byId: {}, allIds: [] }
-    const entity: Entity = { id: 'abc', description: 'item 1' }
+    const initial = { byId: {}, allIds: [], activeId: undefined }
+    const entity = { id: 'abc', description: 'item 1' }
 
     const result = setEntitiesT(entity)(initial)
 
-    assert.equal(result, { byId: { abc: entity }, allIds: ['abc'] })
+    assert.equal(result, { byId: { abc: entity }, allIds: ['abc'], activeId: undefined })
 })
 
 test('accepts an array of entities', () => {
-    const initial = { byId: {}, allIds: [] }
-    const entities: Entity[] = [
+    const initial = { byId: {}, allIds: [], activeId: undefined }
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1' },
         { id: 'def', description: 'item 2' },
     ]
@@ -39,6 +39,7 @@ test('accepts an array of entities', () => {
             def: entities[1],
         },
         allIds: ['abc', 'def'],
+        activeId: undefined,
     })
 })
 
@@ -49,8 +50,9 @@ test('replaces existing entities', () => {
             def: { id: 'def', description: 'item 2' },
         },
         allIds: ['abc', 'def'],
+        activeId: undefined,
     }
-    const entity: Entity = { id: 'abc', description: 'item 10' }
+    const entity: TestEntity = { id: 'abc', description: 'item 10' }
 
     const result = setEntitiesT(entity)(initial)
 
@@ -60,6 +62,7 @@ test('replaces existing entities', () => {
             def: initial.byId.def,
         },
         allIds: initial.allIds,
+        activeId: undefined,
     })
 })
 
@@ -71,7 +74,7 @@ test('handles a mix of existing and new entities', () => {
         },
         allIds: ['abc', 'def'],
     }
-    const entities: Entity[] = [
+    const entities: TestEntity[] = [
         { id: 'abc', description: 'item 10' },
         { id: 'ghi', description: 'item 3' },
     ]
@@ -85,6 +88,7 @@ test('handles a mix of existing and new entities', () => {
             ghi: entities[1],
         },
         allIds: initial.allIds.concat(entities[1].id),
+        activeId: undefined,
     })
 })
 
@@ -95,6 +99,7 @@ test('noop for an empty array', () => {
             def: { id: 'def', description: 'item 2' },
         },
         allIds: ['abc', 'def'],
+        activeId: undefined,
     }
 
     const result = setEntitiesT([])(initial)

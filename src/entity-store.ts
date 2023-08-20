@@ -1,12 +1,14 @@
-import { derived, Updater, writable } from 'svelte/store'
+import type { Readable, Subscriber, Unsubscriber } from 'svelte/store'
+import { Updater, derived, writable } from 'svelte/store'
+import { getActiveEntity } from './internal/get-active-entity'
 import { getEntities } from './internal/get-entities'
+import type { Normalized } from './internal/normalize'
 import { normalize } from './internal/normalize'
 import { removeEntities } from './internal/remove-entities'
 import { setEntities } from './internal/set-entities'
 import { updateEntities } from './internal/update-entities'
-import type { Readable, Subscriber, Unsubscriber } from 'svelte/store'
-import type { Normalized } from './internal/normalize'
-import type { ID, GetID, Predicate } from './shared'
+import type { Entity, GetID, ID, Predicate } from './shared'
+import { getActiveEntityId } from './internal/get-active-entity-id'
 
 declare type Invalidator<T> = (value?: T) => void
 declare type Subscribe<T> = (this: void, run: Subscriber<T>, invalidate?: Invalidator<T>) => Unsubscriber
@@ -14,7 +16,7 @@ declare type Subscribe<T> = (this: void, run: Subscriber<T>, invalidate?: Invali
 /**
  * Simple Svelte store that normalized data by ID and provides helpers for common data access patterns.
  */
-export type EntityStore<T> = {
+export type EntityStore<T extends Entity> = {
     /**
      * Gets a derived store containing every entity in the store.
      *
@@ -47,6 +49,19 @@ export type EntityStore<T> = {
      * @returns Array of all entities matching the filter function
      */
     get(pred: Predicate<T>): Readable<T[]>
+
+    /**
+     * Gets the ID of the active entity.
+     * @returns ID of the active entity, undefined otherwise
+     */
+    getActiveId(): Readable<ID | undefined>
+
+    /**
+     * Gets the active entity.
+     *
+     * @returns Entitiy, undefined otherwise
+     */
+    getActive(): Readable<T | undefined>
 
     /**
      * Removes the entity from the store, if found.
@@ -162,7 +177,7 @@ export type EntityStore<T> = {
  * @param getID Function that returns the ID of an entity
  * @param initial (optional) Initial array of items to be stored
  */
-export function entityStore<T>(getID: GetID<T>, initial: T[] = []): EntityStore<T> {
+export function entityStore<T extends Entity>(getID: GetID<T>, initial: T[] = []): EntityStore<T> {
     const normalizeT = normalize(getID)
     const removeEntitiesT = removeEntities(getID)
     const setEntitiesT = setEntities(getID)
@@ -196,6 +211,13 @@ export function entityStore<T>(getID: GetID<T>, initial: T[] = []): EntityStore<
         }
     }
 
+    function getActive(): Readable<T | undefined> {
+        return derived(store, getActiveEntity<T>())
+    }
+    function getActiveId(): Readable<ID | undefined> {
+        return derived(store, getActiveEntityId<T>())
+    }
+
     function remove(id: ID): void
     function remove(ids: ID[]): void
     function remove(entity: T): void
@@ -222,5 +244,7 @@ export function entityStore<T>(getID: GetID<T>, initial: T[] = []): EntityStore<
         set,
         subscribe: store.subscribe,
         update,
+        getActive,
+        getActiveId,
     }
 }

@@ -2,12 +2,12 @@ import { test } from 'uvu'
 import * as assert from 'uvu/assert'
 import { normalize } from '../../src/internal/normalize'
 
-type Entity = {
+type TestEntity = {
     id: string
     description: string
 }
 
-const getID = (e: Entity) => e.id
+const getID = (e: TestEntity) => e.id
 
 test('is a function', () => {
     assert.type(normalize, 'function')
@@ -19,11 +19,12 @@ test('handles an empty array', () => {
     assert.equal(state, {
         byId: {},
         allIds: [],
+        activeId: undefined,
     })
 })
 
 test('handles an array of one item', () => {
-    const item: Entity = { id: 'abc', description: 'item 1' }
+    const item: TestEntity = { id: 'abc', description: 'item 1' }
 
     const state = normalize(getID)([item])
 
@@ -32,11 +33,12 @@ test('handles an array of one item', () => {
             abc: item,
         },
         allIds: ['abc'],
+        activeId: undefined,
     })
 })
 
 test('maintains item order', () => {
-    const items: Entity[] = [
+    const items: TestEntity[] = [
         { id: 'abc', description: 'item 1' },
         { id: 'def', description: 'item 2' },
     ]
@@ -49,6 +51,7 @@ test('maintains item order', () => {
             def: items[1],
         },
         allIds: ['abc', 'def'],
+        activeId: undefined,
     })
 })
 
