@@ -15,9 +15,9 @@ const getId = (e) => e.id
 test('returns the active entity', () => {
     const state: Normalized<TestEntity> = {
         byId: {
-            abc: { id: 'abc', description: 'item 1', completed: false, active: false },
-            def: { id: 'def', description: 'item 2', completed: true, active: true },
-            ghi: { id: 'ghi', description: 'item 3', completed: false, active: false },
+            abc: { id: 'abc', description: 'item 1', completed: false },
+            def: { id: 'def', description: 'item 2', completed: true },
+            ghi: { id: 'ghi', description: 'item 3', completed: false },
         },
         allIds: ['abc', 'def', 'ghi'],
         activeId: undefined,
@@ -28,8 +28,8 @@ test('returns the active entity', () => {
     assert.equal(result, {
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false, active: true },
-            def: { id: 'def', description: 'item 2', completed: true, active: false },
-            ghi: { id: 'ghi', description: 'item 3', completed: false, active: false },
+            def: { id: 'def', description: 'item 2', completed: true },
+            ghi: { id: 'ghi', description: 'item 3', completed: false },
         },
         allIds: ['abc', 'def', 'ghi'],
         activeId: 'abc',

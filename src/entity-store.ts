@@ -227,7 +227,7 @@ export function entityStore<T extends Entity>(getID: GetID<T>, initial: T[] = []
     }
 
     function setActive(entity: ID | T): void {
-        derived(store, setActiveEntity<T>(getID)(entity))
+        store.update(setActiveEntity<T>(getID)(entity))
     }
 
     function remove(id: ID): void

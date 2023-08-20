@@ -11,29 +11,42 @@ import { setEntities } from './set-entities'
  */
 export function setActiveEntity<T extends Entity>(
     getId: GetID<T>,
-): (input: ID | T) => (state: Normalized<T>) => Normalized<T> {
+): (selector: ID | T) => (state: Normalized<T>) => Normalized<T> {
     function withInput(id: ID): (state: Normalized<T>) => Normalized<T>
     function withInput(entity: T): (state: Normalized<T>) => Normalized<T>
 
     function withInput(input: ID | T) {
         return function fromState(state: Normalized<T>): Normalized<T> {
-            let toActivate: T
-            let toDeactivate: T[]
+            let toUpdate: T[]
+            toUpdate = getEntities<T>()(state)
+            const idToActivate = isID(input) ? input : getId(input)
+            return toUpdate.reduce(({ byId, allIds, activeId }, next) => {
+                const id = getId(next)
+                if (idToActivate === id) {
+                    activeId = idToActivate
+                }
 
-            const id = isID(input) ? input : getId(input)
-            toActivate = getEntities<T>(id)(state)
-            toDeactivate = getEntities<T>()(state).filter((e) => id !== getId(e))
-
-            state = setEntities(getId)({ ...toActivate, active: true })(state)
-            state = setEntities(getId)(
-                toDeactivate.map((x) => {
-                    return { ...x, active: false }
-                }),
-            )(state)
-
-            return state
+                return {
+                    byId: {
+                        ...byId,
+                        [id]: setActiveUpdater(next, idToActivate),
+                    },
+                    allIds,
+                    activeId,
+                }
+            }, state)
         }
     }
 
     return withInput
+}
+
+function setActiveUpdater<T extends Entity>(value: T, idToActivate: ID): T {
+    if (value.id === idToActivate)
+        return {
+            ...value,
+            active: true,
+        }
+    if (value.active) return { ...value, active: false }
+    return value
 }
