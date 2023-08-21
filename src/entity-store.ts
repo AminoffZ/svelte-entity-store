@@ -1,15 +1,15 @@
 import type { Readable, Subscriber, Unsubscriber } from 'svelte/store'
 import { Updater, derived, writable } from 'svelte/store'
 import { getActiveEntity } from './internal/get-active-entity'
+import { getActiveEntityId } from './internal/get-active-entity-id'
 import { getEntities } from './internal/get-entities'
 import type { Normalized } from './internal/normalize'
 import { normalize } from './internal/normalize'
 import { removeEntities } from './internal/remove-entities'
+import { setActiveEntity } from './internal/set-active-entity'
 import { setEntities } from './internal/set-entities'
 import { updateEntities } from './internal/update-entities'
-import type { Entity, GetID, ID, Predicate } from './shared'
-import { getActiveEntityId } from './internal/get-active-entity-id'
-import { setActiveEntity } from './internal/set-active-entity'
+import type { GetID, ID, Predicate } from './shared'
 
 declare type Invalidator<T> = (value?: T) => void
 declare type Subscribe<T> = (this: void, run: Subscriber<T>, invalidate?: Invalidator<T>) => Unsubscriber
@@ -17,7 +17,7 @@ declare type Subscribe<T> = (this: void, run: Subscriber<T>, invalidate?: Invali
 /**
  * Simple Svelte store that normalized data by ID and provides helpers for common data access patterns.
  */
-export type EntityStore<T extends Entity> = {
+export type EntityStore<T> = {
     /**
      * Gets a derived store containing every entity in the store.
      *
@@ -31,7 +31,7 @@ export type EntityStore<T extends Entity> = {
      * @param id ID of the entity to find
      * @returns Entity object if found, undefined otherwise
      */
-    get(id: ID): Readable<T | undefined>
+    get(id: ID): Readable<T| undefined>
 
     /**
      * Gets a derived store containing a list of all entities found by ID.
@@ -53,6 +53,7 @@ export type EntityStore<T extends Entity> = {
 
     /**
      * Gets the ID of the active entity.
+     * 
      * @returns ID of the active entity, undefined otherwise
      */
     getActiveId(): Readable<ID | undefined>
@@ -62,7 +63,7 @@ export type EntityStore<T extends Entity> = {
      *
      * @returns Entitiy, undefined otherwise
      */
-    getActive(): Readable<T | undefined>
+    getActive(): Readable<T| undefined>
 
     /**
      * Removes the entity from the store, if found.
@@ -121,9 +122,16 @@ export type EntityStore<T extends Entity> = {
     /**
      * Sets the active entity.
      *
-     * @param The Entity itself or the ID of the entity to set as active
+     * @param id ID of the entity to set as active
      */
-    setActive(entity: ID | T): void
+    setActive(entity: ID): void
+
+    /**
+     * Sets the active entity.
+     *
+     * @param entity Entity to set as active
+     */
+    setActive(entity: T): void
 
     /**
      * See (Svelte's docs)[https://svelte.dev/docs#svelte_store] for details on the Store contract and `subscribe` function.
@@ -185,11 +193,12 @@ export type EntityStore<T extends Entity> = {
  * @param getID Function that returns the ID of an entity
  * @param initial (optional) Initial array of items to be stored
  */
-export function entityStore<T extends Entity>(getID: GetID<T>, initial: T[] = []): EntityStore<T> {
+export function entityStore<T>(getID: GetID<T>, initial: T[] = []): EntityStore<T> {
     const normalizeT = normalize(getID)
     const removeEntitiesT = removeEntities(getID)
     const setEntitiesT = setEntities(getID)
     const updateEntitiesT = updateEntities(getID)
+    const setActiveEntityT = setActiveEntity(getID)
 
     const store = writable(normalizeT(initial))
 
@@ -226,8 +235,10 @@ export function entityStore<T extends Entity>(getID: GetID<T>, initial: T[] = []
         return derived(store, getActiveEntityId<T>())
     }
 
+    function setActive(id: ID): void
+    function setActive(entity: T): void
     function setActive(entity: ID | T): void {
-        store.update(setActiveEntity<T>(getID)(entity))
+        store.update(setActiveEntityT(entity))
     }
 
     function remove(id: ID): void

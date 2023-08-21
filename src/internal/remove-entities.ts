@@ -1,8 +1,8 @@
+import { GetID, ID, isID, Predicate } from '../shared'
 import { getEntities } from './get-entities'
 import type { Normalized } from './normalize'
-import { Entity, GetID, ID, isID, Predicate } from '../shared'
 
-export function removeEntities<T extends Entity>(
+export function removeEntities<T>(
     getId: GetID<T>,
 ): (input: ID | ID[] | T | T[] | Predicate<T>) => (state: Normalized<T>) => Normalized<T> {
     /**

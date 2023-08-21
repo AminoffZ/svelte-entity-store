@@ -1,11 +1,11 @@
-import { Entity, ID } from '../shared'
+import { ID } from '../shared'
 import { Normalized } from './normalize'
 
 /**
- * Gets the ID of the active entity. The active entity is the entity with the `active` property set to `true`.
+ * Gets the ID of the active entity.
  * @returns ID of the active entity
  */
-export function getActiveEntityId<T extends Entity>() {
+export function getActiveEntityId<T>() {
     return function (state: Normalized<T>): ID {
         return state?.activeId
     }

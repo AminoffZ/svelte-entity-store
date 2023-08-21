@@ -123,7 +123,7 @@ test('accepts an array of entities', () => {
             ghi: { id: 'ghi', description: 'item 3', completed: false },
         },
         allIds: ['abc', 'def', 'ghi'],
-        activeId: 'abc',
+        activeId: undefined,
     }
 
     const result = updateEntitiesT(toggle)([state.byId.abc, state.byId.ghi])(state)

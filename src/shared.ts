@@ -18,11 +18,9 @@ export function isID(value: unknown): value is ID {
 /**
  * Function used to get the unique ID of an entity
  */
-export type GetID<T extends Entity> = (t: T) => ID
+export type GetID<T> = (t: T) => ID
 
 /**
  * Predicate used for filtering entities
  */
-export type Predicate<T extends Entity> = (t: T) => boolean
-
-export type Entity = { [key: string]: any } & Partial<{ active?: boolean | undefined }>
+export type Predicate<T> = (t: T) => boolean

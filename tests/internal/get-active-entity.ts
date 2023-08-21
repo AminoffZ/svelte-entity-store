@@ -15,7 +15,7 @@ test('returns the active entity', () => {
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false },
             def: { id: 'def', description: 'item 2', completed: true },
-            ghi: { id: 'ghi', description: 'item 3', completed: false, active: true },
+            ghi: { id: 'ghi', description: 'item 3', completed: false },
         },
         allIds: ['abc', 'def', 'ghi'],
         activeId: 'ghi',

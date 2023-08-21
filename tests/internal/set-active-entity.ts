@@ -27,7 +27,7 @@ test('returns the active entity', () => {
 
     assert.equal(result, {
         byId: {
-            abc: { id: 'abc', description: 'item 1', completed: false, active: true },
+            abc: { id: 'abc', description: 'item 1', completed: false },
             def: { id: 'def', description: 'item 2', completed: true },
             ghi: { id: 'ghi', description: 'item 3', completed: false },
         },

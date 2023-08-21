@@ -1,10 +1,10 @@
-import { getEntities } from './get-entities'
-import { isID } from '../shared'
 import type { Updater } from 'svelte/store'
+import type { GetID, ID, Predicate } from '../shared'
+import { isID } from '../shared'
+import { getEntities } from './get-entities'
 import type { Normalized } from './normalize'
-import type { Entity, GetID, ID, Predicate } from '../shared'
 
-export function updateEntities<T extends Entity>(
+export function updateEntities<T>(
     getId: GetID<T>,
 ): (updater: Updater<T>) => (input?: ID | ID[] | T | T[] | Predicate<T>) => (state: Normalized<T>) => Normalized<T> {
     return function withUpdater(updater: Updater<T>) {
@@ -33,9 +33,6 @@ export function updateEntities<T extends Entity>(
 
                 return toUpdate.reduce(({ byId, allIds, activeId }, next) => {
                     const id = getId(next)
-                    if (id === activeId) {
-                        activeId = next?.active ? id : undefined
-                    }
                     return {
                         byId: {
                             ...byId,

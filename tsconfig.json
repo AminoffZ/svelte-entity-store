@@ -4,7 +4,7 @@
         "compilerOptions": {
             "module": "commonjs"
         },
-        "include": ["tests/**/*"]
+        "include": ["./tests/**/*"]
     },
     "compilerOptions": {
         "noImplicitAny": true,
@@ -18,6 +18,6 @@
         "moduleResolution": "node",
         "forceConsistentCasingInFileNames": true
     },
-    "include": ["@types/**/*", "src/**/*"],
+    "include": ["@types/**/*", "./src/**/*"],
     "exclude": ["node_modules"]
 }
