@@ -14,7 +14,12 @@
 
 A (**w**ork-**i**n-**p**rogress) generic entity store for Svelte projects.
 
-Check out the [full docs](https://tony-sull.github.io/svelte-entity-store/) for details.
+Check out the [full docs](https://aminoffz.github.io/svelte-entity-store) for details.
+
+## This Fork 🍴
+
+Updated to work with latest version of SvelteKit (tested and working on 4.0.5).
+Added activeId to allow setting and reading an "active" entity similar to [akita](https://opensource.salesforce.com/akita/docs/entities/active/).
 
 ## Why?
 
@@ -93,6 +98,14 @@ Gets the entity by ID, or undefined if it isn't found.
 
 Gets an array of specific entities by ID.  IDs will be ignored if they aren't found in the store - the array of entities returned may not be the same length as the `ids` array provided.
 
+#### getActive()
+
+Gets the active entity.
+
+#### getActiveId()
+
+Gets the ID of the active entity.
+
 #### get(pred: Predicate<T>)
 
 Gets every entity that matches the predicate - the equivalent of `Array.prototype.filter()`
@@ -128,6 +141,14 @@ Adds entity to the store, or replaces the old state if it already exists.
 #### set(entities: T[])
 
 Works just like `set(entity: T)`, but for each item in the array.  This is useful when you ened to update more than one entity and don't want to trigger subscribers until all entities are added.
+
+#### setActiveEntity(entity: T)
+
+Sets the active entity, takes the entity to set as active as an argument.
+
+#### setActiveEntity(id: ID)
+
+Sets the active entity with its id as an argument.
 
 ### entityStore.subscribe
 
