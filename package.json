@@ -28,7 +28,7 @@
         "test:coverage": "c8 --include=src npm test",
         "test:report": "c8 report --reporter=text-lcov > coverage.lcov",
         "prepublishOnly": "npm run build",
-        "postinstall": "tsc -p ./tsconfig.json && npm run build"
+        "postinstall": "tsc -p tsconfig.json && npm run build"
     },
     "repository": {
         "type": "git",
