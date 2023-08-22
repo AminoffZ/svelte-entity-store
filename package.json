@@ -21,14 +21,13 @@
     "scripts": {
         "doc": "typedoc",
         "lint": "eslint src/ --ext .ts",
-        "build-declarations": "tsc -d",
+        "build-declarations": "tsc -d && node scripts/move-type-declarations.js",
         "build": "npm run build-declarations && rollup -c",
         "dev": "rollup -cw",
         "test": "uvu -r ts-node/register tests",
         "test:coverage": "c8 --include=src npm test",
         "test:report": "c8 report --reporter=text-lcov > coverage.lcov",
-        "prepublishOnly": "npm run build",
-        "postinstall": "tsc -p tsconfig.json && npm run build"
+        "prepublishOnly": "npm run build"
     },
     "repository": {
         "type": "git",
