@@ -124,7 +124,7 @@ export type EntityStore<T> = {
      *
      * @param id ID of the entity to set as active
      */
-    setActive(entity: ID): void
+    setActive(id: ID): void
 
     /**
      * Sets the active entity.
