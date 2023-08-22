@@ -27,7 +27,8 @@
         "test": "uvu -r ts-node/register tests",
         "test:coverage": "c8 --include=src npm test",
         "test:report": "c8 report --reporter=text-lcov > coverage.lcov",
-        "prepublishOnly": "npm run build"
+        "prepublishOnly": "npm run build",
+        "postinstall": "npm run build"
     },
     "repository": {
         "type": "git",
