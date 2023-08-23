@@ -12,14 +12,14 @@ Added persistency option to allow storing the stores in localStorage.
 
 ## Why?
 
-This is ultimately just a [custom store](https://svelte.dev/examples#custom-stores) built on top of [svelte/store](https://svelte.dev/docs#svelte_store). Like the rest of Svelte, the built in stores are excellent building blocks that aim to give you all the tools you need without trying to solve every single scenario out of the box.
+This is ultimately just a [custom store](https://svelte.dev/examples/custom-stores) built on top of [svelte/store](https://svelte.dev/docs/svelte-store). Like the rest of Svelte, the built in stores are excellent building blocks that aim to give you all the tools you need without trying to solve every single scenario out of the box.
 
 The goal with `svelte-entity-store` is to provide a simple, generic solution for storing collections of entity objects. Throwing an array of items into a basic `writeble` store doesn't scale well if you have a lot of items and need to quickly find or update one item in the store.
 
 ## Install
 
 ```
-npm install https://github.com/AminoffZ/svelte-entity-store/releases/download/v1.0.4/svelte-entity-store-1.0.4.tgz
+npm install https://github.com/AminoffZ/svelte-entity-store/releases/download/v1.0.5/svelte-entity-store-1.0.5.tgz
 ```
 
 ## Usage
