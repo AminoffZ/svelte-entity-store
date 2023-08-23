@@ -10,12 +10,12 @@ import { Normalized } from "./normalize";
  * @returns {void}
  */
 export function persistStore<T>(store: EntityStore<T>, storageKey: string) {
-	if (hasLocalStorage()) {
-		store.subscribe((value: Normalized<T>) => {
-			let storageValue = JSON.stringify(value);
-			window.localStorage.setItem(storageKey, storageValue);
-		});
-		return;
-	}
-	throw new Error('Cannot persist store in a non-browser environment');
+	if (!hasLocalStorage()) throw new Error('Cannot persist store in a non-browser environment');
+	store.subscribe((value: Normalized<T>) => {
+		let storageValue = JSON.stringify(value);
+		window.localStorage.setItem(storageKey, storageValue);
+	});
+	return;
 }
+	
+
