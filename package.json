@@ -20,6 +20,7 @@
     },
     "scripts": {
         "doc": "typedoc",
+        "deploy": "npm run build && npm run doc && gh-pages -d docs",
         "lint": "eslint src/ --ext .ts",
         "build-declarations": "tsc -d && node scripts/move-type-declarations.js",
         "build": "npm run build-declarations && rollup -c",
@@ -34,9 +35,11 @@
         "url": "git+https://github.com/AminoffZ/svelte-entity-store.git"
     },
     "author": "Tony Sullivan",
-    "contributors": [{
-        "name": "Mauritz Aminoff"
-    }],
+    "contributors": [
+        {
+            "name": "Mauritz Aminoff"
+        }
+    ],
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/tony-sull/svelte-entity-store/issues"
@@ -56,6 +59,7 @@
         "eslint": "^7.25.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^3.4.0",
+        "gh-pages": "^6.0.0",
         "glob": "^10.3.3",
         "prettier": "^2.2.1",
         "rollup": "^2.46.0",
