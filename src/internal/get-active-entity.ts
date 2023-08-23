@@ -2,6 +2,7 @@ import { Normalized } from './normalize'
 
 /**
  * Gets the active entity.
+ * 
  * @returns Active Entity
  */
 export function getActiveEntity<T>() {

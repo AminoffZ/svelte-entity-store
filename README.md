@@ -8,6 +8,7 @@ Check out the [full docs](https://aminoffz.github.io/svelte-entity-store) for de
 
 Updated to work with latest version of SvelteKit (tested and working on 4.0.5).
 Added activeId to allow setting and reading an "active" entity similar to [akita](https://opensource.salesforce.com/akita/docs/entities/active/).
+Added persistency option to allow storing the stores in localStorage.
 
 ## Why?
 

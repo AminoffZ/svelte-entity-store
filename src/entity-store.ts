@@ -3,13 +3,15 @@ import { Updater, derived, writable } from 'svelte/store'
 import { getActiveEntity } from './internal/get-active-entity'
 import { getActiveEntityId } from './internal/get-active-entity-id'
 import { getEntities } from './internal/get-entities'
+import { hydrateStore } from './internal/hydrate-store'
 import type { Normalized } from './internal/normalize'
 import { normalize } from './internal/normalize'
+import { persistStore } from './internal/persist-store'
 import { removeEntities } from './internal/remove-entities'
 import { setActiveEntity } from './internal/set-active-entity'
 import { setEntities } from './internal/set-entities'
 import { updateEntities } from './internal/update-entities'
-import type { GetID, ID, Predicate } from './shared'
+import type { EntityStoreOptions, GetID, ID, Predicate } from './shared'
 
 declare type Invalidator<T> = (value?: T) => void
 declare type Subscribe<T> = (this: void, run: Subscriber<T>, invalidate?: Invalidator<T>) => Unsubscriber
@@ -193,7 +195,7 @@ export type EntityStore<T> = {
  * @param getID Function that returns the ID of an entity
  * @param initial (optional) Initial array of items to be stored
  */
-export function entityStore<T>(getID: GetID<T>, initial: T[] = []): EntityStore<T> {
+function createEntityStore<T>(getID: GetID<T>, initial: T[] = []) {
     const normalizeT = normalize(getID)
     const removeEntitiesT = removeEntities(getID)
     const setEntitiesT = setEntities(getID)
@@ -270,5 +272,48 @@ export function entityStore<T>(getID: GetID<T>, initial: T[] = []): EntityStore<
         getActive,
         getActiveId,
         setActive,
+    };
+}
+
+
+/**
+ * Creates a new entity store that persists to local storage.
+ * 
+ * @typeParam T Entity type being stored
+ * @param getID Function that returns the ID of an entity
+ * @param initial (optional) Initial array of items to be stored
+ * @param key Key to use for local storage
+ * @returns Entity store
+ */
+function createPersistantEntityStore<T>(getID: GetID<T>, initial: T[] = [], key: string) {
+    initial = hydrateStore<T>(key, initial);
+    const entityStore = createEntityStore<T>(getID, initial);
+    persistStore<T>(entityStore, key);
+    return entityStore;
+}
+
+/**
+ * Creates a new entity store.
+ * 
+ * @typeParam T Entity type being stored
+ * @param getID Function that returns the ID of an entity
+ * @param initial (optional) Initial array of items to be stored
+ * @param options (optional) Options for the store
+ * @returns Entity store
+ */
+export function entityStore<T>(getID: GetID<T>, initial?: T[]): EntityStore<T>;
+export function entityStore<T>(getID: GetID<T>, options: EntityStoreOptions): EntityStore<T>;
+export function entityStore<T>(getID: GetID<T>, initial: T[], options: EntityStoreOptions): EntityStore<T>;
+export function entityStore<T>(getID: GetID<T>, initialOrOptions?: T[] | EntityStoreOptions, options?: EntityStoreOptions): EntityStore<T> {
+    let initial: T[] = [];
+
+    if (Array.isArray(initialOrOptions)) {
+        initial = initialOrOptions;
+    } else if (initialOrOptions) {
+        options = initialOrOptions;
     }
+    if (options.persist) {
+        return createPersistantEntityStore<T>(getID, initial, options.storageKey);
+    } 
+    return createEntityStore<T>(getID, initial);
 }
