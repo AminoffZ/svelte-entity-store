@@ -19,22 +19,21 @@ export function hydrateStore<T>(storageKey: string, fallbackValue: T): T
  */
 export function hydrateStore<T>(storageKey: string, fallbackValue: T[]): T[]
 
-export function hydrateStore<T>(storageKey: string, fallbackValue: T | T[] = null): T | T[] {
-	if (hasLocalStorage()) {
-		const storedValue = window.localStorage.getItem(storageKey);
+export function hydrateStore<T>(storageKey: string, fallbackValue?: T | T[]): T | T[] {
+	if (!hasLocalStorage()) return fallbackValue;
+	
+	const storedValue = window.localStorage.getItem(storageKey);
+	if (!storedValue) return fallbackValue;
 
-		if (storedValue) {
-			try {
-				const parsedValue = JSON.parse(storedValue);
-                if (Array.isArray(fallbackValue)) {
-                    return Object.values(parsedValue.byId);
-                }
-				return parsedValue;
-			} catch {
-				return fallbackValue;
-			}
-		}
+	try {
+		const parsedValue = JSON.parse(storedValue);
+		
+        if (Array.isArray(fallbackValue)) {
+            return Object.values(parsedValue.byId);
+        }
+
+		return parsedValue;
+	} catch {
 		return fallbackValue;
 	}
-	return fallbackValue;
 }
