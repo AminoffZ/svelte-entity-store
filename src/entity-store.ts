@@ -3,7 +3,7 @@ import { Updater, derived, writable } from 'svelte/store'
 import { getActiveEntity } from './internal/get-active-entity'
 import { getActiveEntityId } from './internal/get-active-entity-id'
 import { getEntities } from './internal/get-entities'
-import { hydrateStore } from './internal/hydrate-store'
+import { hydrateEntities } from './internal/hydrate-entities'
 import type { Normalized } from './internal/normalize'
 import { normalize } from './internal/normalize'
 import { persistStore } from './internal/persist-store'
@@ -12,6 +12,7 @@ import { setActiveEntity } from './internal/set-active-entity'
 import { setEntities } from './internal/set-entities'
 import { updateEntities } from './internal/update-entities'
 import type { EntityStoreOptions, GetID, ID, Predicate } from './shared'
+import { hydrateActiveId } from './internal/hydrate-active-id'
 
 declare type Invalidator<T> = (value?: T) => void
 declare type Subscribe<T> = (this: void, run: Subscriber<T>, invalidate?: Invalidator<T>) => Unsubscriber
@@ -195,8 +196,8 @@ export type EntityStore<T> = {
  * @param getID Function that returns the ID of an entity
  * @param initial (optional) Initial array of items to be stored
  */
-function createEntityStore<T>(getID: GetID<T>, initial: T[] = []) {
-    const normalizeT = normalize(getID)
+function createEntityStore<T>(getID: GetID<T>, initial: T[], activeId?: ID) {
+    const normalizeT = normalize(getID, activeId)
     const removeEntitiesT = removeEntities(getID)
     const setEntitiesT = setEntities(getID)
     const updateEntitiesT = updateEntities(getID)
@@ -286,8 +287,9 @@ function createEntityStore<T>(getID: GetID<T>, initial: T[] = []) {
  * @returns Entity store
  */
 function createPersistantEntityStore<T>(getID: GetID<T>, initial: T[] = [], key: string) {
-    initial = hydrateStore<T>(key, initial);
-    const entityStore = createEntityStore<T>(getID, initial);
+    initial = hydrateEntities<T>(key, initial);
+    const activeId = hydrateActiveId<T>(key);
+    const entityStore = createEntityStore<T>(getID, initial, activeId);
     persistStore<T>(entityStore, key);
     return entityStore;
 }

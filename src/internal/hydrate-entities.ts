@@ -7,7 +7,7 @@ import { hasLocalStorage } from "../shared";
  * @param storageKey Key to use for local storage
  * @param fallbackValue Value to return if no entity is found
  */
-export function hydrateStore<T>(storageKey: string, fallbackValue: T): T
+export function hydrateEntities<T>(storageKey: string, fallbackValue: T): T
 
 /**
  * Hydrates entities from local storage if they exist and returns them.
@@ -17,9 +17,9 @@ export function hydrateStore<T>(storageKey: string, fallbackValue: T): T
  * @param fallbackValue Value to return if no entities are found
  * @returns 
  */
-export function hydrateStore<T>(storageKey: string, fallbackValue: T[]): T[]
+export function hydrateEntities<T>(storageKey: string, fallbackValue: T[]): T[]
 
-export function hydrateStore<T>(storageKey: string, fallbackValue?: T | T[]): T | T[] {
+export function hydrateEntities<T>(storageKey: string, fallbackValue?: T | T[]): T | T[] {
 	if (!hasLocalStorage()) return fallbackValue;
 	
 	const storedValue = window.localStorage.getItem(storageKey);
