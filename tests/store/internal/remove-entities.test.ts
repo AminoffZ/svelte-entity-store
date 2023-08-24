@@ -1,5 +1,3 @@
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
 import { removeEntities } from '../../../src/internal/remove-entities'
 import { Normalized } from '../../../src/internal/normalize'
 
@@ -15,7 +13,7 @@ const isCompleted = (e: TestEntity) => e.completed
 const removeEntitiesT = removeEntities(getId)
 
 test('is a function', () => {
-    assert.type(removeEntities, 'function')
+    expect(removeEntities).toBeInstanceOf(Function)
 })
 
 test('accepts a single ID', () => {
@@ -27,7 +25,11 @@ test('accepts a single ID', () => {
     }
     const result = removeEntitiesT('abc')(state)
 
-    assert.equal(result, { byId: {}, allIds: [], activeId: undefined })
+    expect(result).toEqual({
+        byId: {},
+        allIds: [],
+        activeId: undefined,
+    })
 })
 
 test('accepts an array of IDs', () => {
@@ -41,7 +43,7 @@ test('accepts an array of IDs', () => {
     }
     const result = removeEntitiesT(['abc', 'ghi'])(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             def: state.byId.def,
         },
@@ -62,7 +64,7 @@ test('accepts an entity object', () => {
     }
     const result = removeEntitiesT(state.byId.abc)(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             def: state.byId.def,
             ghi: state.byId.ghi,
@@ -83,7 +85,7 @@ test('accepts an array of entity objects', () => {
     }
     const result = removeEntitiesT([state.byId.abc, state.byId.ghi])(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             def: state.byId.def,
         },
@@ -103,7 +105,7 @@ test('accepts a filter function', () => {
     }
     const result = removeEntitiesT(isCompleted)(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             def: state.byId.def,
         },
@@ -122,7 +124,7 @@ test('ignores unknown ID', () => {
     }
     const result = removeEntitiesT('def')(state)
 
-    assert.equal(result, state)
+    expect(result).toEqual(state)
 })
 
 test('ignores unknown IDs in an array', () => {
@@ -136,7 +138,7 @@ test('ignores unknown IDs in an array', () => {
     }
     const result = removeEntitiesT(['jkl', 'ghi'])(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: state.byId.abc,
             def: state.byId.def,
@@ -160,7 +162,7 @@ test('ignores an unknown entity', () => {
         completed: false,
     })(state)
 
-    assert.equal(result, state)
+    expect(result).toEqual(state)
 })
 
 test('ignores unknown entities in an array', () => {
@@ -182,7 +184,7 @@ test('ignores unknown entities in an array', () => {
         state.byId.ghi,
     ])(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: state.byId.abc,
             def: state.byId.def,
@@ -191,5 +193,3 @@ test('ignores unknown entities in an array', () => {
         activeId: undefined,
     })
 })
-
-test.run()

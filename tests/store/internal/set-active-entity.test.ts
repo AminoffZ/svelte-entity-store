@@ -1,5 +1,3 @@
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
 import { Normalized } from '../../../src/internal/normalize'
 import { setActiveEntity } from '../../../src/internal/set-active-entity'
 
@@ -10,7 +8,7 @@ type TestEntity = {
     active?: boolean
 }
 
-const getId = (e) => e.id
+const getId = (e: TestEntity) => e.id
 
 test('returns the active entity', () => {
     const state: Normalized<TestEntity> = {
@@ -25,7 +23,7 @@ test('returns the active entity', () => {
 
     const result = setActiveEntity<TestEntity>(getId)('abc')(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false },
             def: { id: 'def', description: 'item 2', completed: true },
@@ -35,5 +33,3 @@ test('returns the active entity', () => {
         activeId: 'abc',
     })
 })
-
-test.run()

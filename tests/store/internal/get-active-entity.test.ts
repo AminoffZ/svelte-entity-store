@@ -1,5 +1,3 @@
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
 import { Normalized } from '../../../src/internal/normalize'
 import { getActiveEntity } from '../../../src/internal/get-active-entity'
 
@@ -23,7 +21,5 @@ test('returns the active entity', () => {
 
     const result = getActiveEntity<TestEntity>()(state)
 
-    assert.equal(result, state.byId.ghi)
+    expect(result).toEqual(state.byId.ghi)
 })
-
-test.run()

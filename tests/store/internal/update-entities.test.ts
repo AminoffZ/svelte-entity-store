@@ -1,5 +1,3 @@
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
 import { updateEntities } from '../../../src/internal/update-entities'
 import type { Normalized } from '../../../src/internal/normalize'
 
@@ -9,14 +7,14 @@ type TestEntity = {
     completed: boolean
 }
 
-const getId = (e) => e.id
+const getId = (e: TestEntity) => e.id
 const isCompleted = (e: TestEntity) => e.completed
 const toggle = (e: TestEntity) => ({ ...e, completed: !e.completed })
 
 const updateEntitiesT = updateEntities(getId)
 
 test('is a function', () => {
-    assert.type(updateEntities, 'function')
+    expect(updateEntities).toBeInstanceOf(Function)
 })
 
 test('accepts no parameters', () => {
@@ -32,7 +30,7 @@ test('accepts no parameters', () => {
 
     const result = updateEntitiesT(toggle)()(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: true },
             def: { id: 'def', description: 'item 2', completed: true },
@@ -56,7 +54,7 @@ test('accepts a single ID', () => {
 
     const result = updateEntitiesT(toggle)('abc')(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: true },
             def: { id: 'def', description: 'item 2', completed: false },
@@ -80,7 +78,7 @@ test('accepts a single entity', () => {
 
     const result = updateEntitiesT(toggle)(state.byId.abc)(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: true },
             def: { id: 'def', description: 'item 2', completed: false },
@@ -104,7 +102,7 @@ test('accepts an array of IDs', () => {
 
     const result = updateEntitiesT(toggle)(['abc', 'ghi'])(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: true },
             def: { id: 'def', description: 'item 2', completed: false },
@@ -128,7 +126,7 @@ test('accepts an array of entities', () => {
 
     const result = updateEntitiesT(toggle)([state.byId.abc, state.byId.ghi])(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: true },
             def: { id: 'def', description: 'item 2', completed: false },
@@ -152,7 +150,7 @@ test('accepts a filter function', () => {
 
     const result = updateEntitiesT(toggle)(isCompleted)(state)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: { id: 'abc', description: 'item 1', completed: false },
             def: { id: 'def', description: 'item 2', completed: false },
@@ -162,5 +160,3 @@ test('accepts a filter function', () => {
         activeId: 'abc',
     })
 })
-
-test.run()

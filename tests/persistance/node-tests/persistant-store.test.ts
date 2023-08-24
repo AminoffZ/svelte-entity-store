@@ -1,5 +1,6 @@
-import { entityStore } from '../../../src'
-import { hasLocalStorage } from '../../../src/shared'
+import { entityStore } from "../../../src"
+import { hasLocalStorage } from "../../../src/shared"
+
 
 type TestEntity = {
     id: string

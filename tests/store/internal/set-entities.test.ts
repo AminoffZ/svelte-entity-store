@@ -1,5 +1,4 @@
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
+import { Normalized } from '../../../src/internal/normalize'
 import { setEntities } from '../../../src/internal/set-entities'
 
 type TestEntity = {
@@ -7,25 +6,31 @@ type TestEntity = {
     description: string
 }
 
-const getId = (e) => e.id
+const getId = (e: TestEntity) => e.id
 
 const setEntitiesT = setEntities(getId)
 
 test('is a function', () => {
-    assert.type(setEntities, 'function')
+    expect(setEntities).toBeInstanceOf(Function)
 })
 
 test('accepts a single entity', () => {
-    const initial = { byId: {}, allIds: [], activeId: undefined }
-    const entity = { id: 'abc', description: 'item 1' }
+    const initial: Normalized<TestEntity> = { byId: {}, allIds: [], activeId: undefined }
+    const entity: TestEntity = { id: 'abc', description: 'item 1' }
 
     const result = setEntitiesT(entity)(initial)
 
-    assert.equal(result, { byId: { abc: entity }, allIds: ['abc'], activeId: undefined })
+    expect(result).toEqual({
+        byId: {
+            abc: entity,
+        },
+        allIds: ['abc'],
+        activeId: undefined,
+    })
 })
 
 test('accepts an array of entities', () => {
-    const initial = { byId: {}, allIds: [], activeId: undefined }
+    const initial: Normalized<TestEntity> = { byId: {}, allIds: [], activeId: undefined }
     const entities: TestEntity[] = [
         { id: 'abc', description: 'item 1' },
         { id: 'def', description: 'item 2' },
@@ -33,7 +38,7 @@ test('accepts an array of entities', () => {
 
     const result = setEntitiesT(entities)(initial)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: entities[0],
             def: entities[1],
@@ -44,7 +49,7 @@ test('accepts an array of entities', () => {
 })
 
 test('replaces existing entities', () => {
-    const initial = {
+    const initial: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1' },
             def: { id: 'def', description: 'item 2' },
@@ -56,7 +61,7 @@ test('replaces existing entities', () => {
 
     const result = setEntitiesT(entity)(initial)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: entity,
             def: initial.byId.def,
@@ -67,7 +72,7 @@ test('replaces existing entities', () => {
 })
 
 test('handles a mix of existing and new entities', () => {
-    const initial = {
+    const initial: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1' },
             def: { id: 'def', description: 'item 2' },
@@ -81,7 +86,7 @@ test('handles a mix of existing and new entities', () => {
 
     const result = setEntitiesT(entities)(initial)
 
-    assert.equal(result, {
+    expect(result).toEqual({
         byId: {
             abc: entities[0],
             def: initial.byId.def,
@@ -93,7 +98,7 @@ test('handles a mix of existing and new entities', () => {
 })
 
 test('noop for an empty array', () => {
-    const initial = {
+    const initial: Normalized<TestEntity> = {
         byId: {
             abc: { id: 'abc', description: 'item 1' },
             def: { id: 'def', description: 'item 2' },
@@ -104,7 +109,5 @@ test('noop for an empty array', () => {
 
     const result = setEntitiesT([])(initial)
 
-    assert.equal(initial, result)
+    expect(result).toEqual(initial)
 })
-
-test.run()

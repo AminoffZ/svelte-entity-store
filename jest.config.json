@@ -1,0 +1,25 @@
+{
+  "transformIgnorePatterns": ["/node_modules/(?!(svelte)/)"],
+  "silent": false,
+  "verbose": true,
+  "projects": [
+    {
+      "preset": "ts-jest",
+      "displayName": "dom",
+      "testEnvironment": "jsdom",
+      "testMatch": ["**/dom-tests/**/*.test.ts"]
+    },
+    {
+      "preset": "ts-jest",
+      "displayName": "node",
+      "testEnvironment": "node",
+      "testMatch": ["**/tests/persistance/node-tests/**/*.test.ts"]
+    },
+    {
+      "preset": "ts-jest",
+      "displayName": "node",
+      "testEnvironment": "node",
+      "testMatch": ["**/tests/store/**/*.test.ts"]
+    }
+  ]
+}

@@ -1,5 +1,3 @@
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
 import { normalize } from '../../../src/internal/normalize'
 
 type TestEntity = {
@@ -10,13 +8,13 @@ type TestEntity = {
 const getID = (e: TestEntity) => e.id
 
 test('is a function', () => {
-    assert.type(normalize, 'function')
+    expect(normalize).toBeInstanceOf(Function)
 })
 
 test('handles an empty array', () => {
     const state = normalize(getID)([])
 
-    assert.equal(state, {
+    expect(state).toEqual({
         byId: {},
         allIds: [],
         activeId: undefined,
@@ -28,7 +26,7 @@ test('handles an array of one item', () => {
 
     const state = normalize(getID)([item])
 
-    assert.equal(state, {
+    expect(state).toEqual({
         byId: {
             abc: item,
         },
@@ -45,7 +43,7 @@ test('maintains item order', () => {
 
     const state = normalize(getID)(items)
 
-    assert.equal(state, {
+    expect(state).toEqual({
         byId: {
             abc: items[0],
             def: items[1],
@@ -54,5 +52,3 @@ test('maintains item order', () => {
         activeId: undefined,
     })
 })
-
-test.run()

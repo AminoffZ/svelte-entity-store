@@ -1,5 +1,3 @@
-import { test } from 'uvu'
-import * as assert from 'uvu/assert'
 import { getEntities } from '../../../src/internal/get-entities'
 import { Normalized } from '../../../src/internal/normalize'
 
@@ -12,7 +10,7 @@ type TestEntity = {
 const isCompleted = (e: TestEntity) => e.completed
 
 test('is a function', () => {
-    assert.type(getEntities, 'function')
+    expect(getEntities).toBeInstanceOf(Function)
 })
 
 test('returns all entities if given no parameters', () => {
@@ -28,7 +26,7 @@ test('returns all entities if given no parameters', () => {
 
     const result = getEntities<TestEntity>()(state)
 
-    assert.equal(result, [state.byId.abc, state.byId.def, state.byId.ghi])
+    expect(result).toEqual([state.byId.abc, state.byId.def, state.byId.ghi])
 })
 
 test('accepts a single ID', () => {
@@ -42,7 +40,7 @@ test('accepts a single ID', () => {
 
     const result = getEntities<TestEntity>('abc')(state)
 
-    assert.equal(result, state.byId.abc)
+    expect(result).toEqual(state.byId.abc)
 })
 
 test('returns undefined for an unknown ID', () => {
@@ -55,7 +53,7 @@ test('returns undefined for an unknown ID', () => {
 
     const result = getEntities<TestEntity>('def')(state)
 
-    assert.is(result, undefined)
+    expect(result).toBeUndefined()
 })
 
 test('accepts an array of IDs', () => {
@@ -71,7 +69,7 @@ test('accepts an array of IDs', () => {
 
     const result = getEntities<TestEntity>(['abc', 'ghi'])(state)
 
-    assert.equal(result, [state.byId.abc, state.byId.ghi])
+    expect(result).toEqual([state.byId.abc, state.byId.ghi])
 })
 
 test('ignores unknown IDs from an array', () => {
@@ -86,8 +84,8 @@ test('ignores unknown IDs from an array', () => {
     }
 
     const result = getEntities<TestEntity>(['abc', 'jkl'])(state)
-
-    assert.equal(result, [state.byId.abc])
+    
+    expect(result).toEqual([state.byId.abc])
 })
 
 test('accepts a filter function', () => {
@@ -102,8 +100,7 @@ test('accepts a filter function', () => {
     }
 
     const result = getEntities<TestEntity>(isCompleted)(state)
-
-    assert.equal(result, [state.byId.def, state.byId.ghi])
+    expect(result).toEqual([state.byId.def, state.byId.ghi])
 })
 
 test('returns an empty array if no entities match filter', () => {
@@ -119,7 +116,5 @@ test('returns an empty array if no entities match filter', () => {
 
     const result = getEntities<TestEntity>(isCompleted)(state)
 
-    assert.equal(result, [])
+    expect(result).toEqual([])
 })
-
-test.run()

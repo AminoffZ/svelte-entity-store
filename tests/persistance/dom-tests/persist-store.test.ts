@@ -1,6 +1,6 @@
-import { entityStore } from '../../../src'
-import { EntityStore } from '../../../src/entity-store'
-import { Normalized } from '../../../src/internal/normalize'
+import { EntityStore, entityStore } from "../../../src/entity-store"
+import { Normalized } from "../../../src/internal/normalize"
+
 
 type TestEntity = {
     id: string
@@ -25,7 +25,7 @@ const normalized: Normalized<TestEntity> = {
     activeId: undefined,
 }
 
-let store: EntityStore<TestEntity>
+let store: EntityStore<TestEntity>;
 beforeEach(() => {
     window.localStorage.clear()
     store = entityStore<TestEntity>(getID, entities, { persist: true, storageKey: 'test' })
