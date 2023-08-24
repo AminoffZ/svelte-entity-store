@@ -1,16 +1,16 @@
-import { Readable, Subscriber, Unsubscriber, Updater, derived, writable } from "svelte/store"
-import { EntityStoreOptions, GetID, ID, Predicate } from "./shared"
-import { Normalized, normalize } from "./internal/normalize"
-import { removeEntities } from "./internal/remove-entities"
-import { setEntities } from "./internal/set-entities"
-import { updateEntities } from "./internal/update-entities"
-import { setActiveEntity } from "./internal/set-active-entity"
-import { getEntities } from "./internal/get-entities"
-import { getActiveEntity } from "./internal/get-active-entity"
-import { getActiveEntityId } from "./internal/get-active-entity-id"
-import { hydrateEntities } from "./internal/hydrate-entities"
-import { hydrateActiveId } from "./internal/hydrate-active-id"
-import { persistStore } from "./internal/persist-store"
+import { Readable, Subscriber, Unsubscriber, Updater, derived, writable } from 'svelte/store'
+import { EntityStoreOptions, GetID, ID, Predicate } from './shared'
+import { Normalized, normalize } from './internal/normalize'
+import { removeEntities } from './internal/remove-entities'
+import { setEntities } from './internal/set-entities'
+import { updateEntities } from './internal/update-entities'
+import { setActiveEntity } from './internal/set-active-entity'
+import { getEntities } from './internal/get-entities'
+import { getActiveEntity } from './internal/get-active-entity'
+import { getActiveEntityId } from './internal/get-active-entity-id'
+import { hydrateEntities } from './internal/hydrate-entities'
+import { hydrateActiveId } from './internal/hydrate-active-id'
+import { persistStore } from './internal/persist-store'
 
 declare type Invalidator<T> = (value?: T) => void
 declare type Subscribe<T> = (this: void, run: Subscriber<T>, invalidate?: Invalidator<T>) => Unsubscriber

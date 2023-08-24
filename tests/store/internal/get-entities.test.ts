@@ -84,7 +84,7 @@ test('ignores unknown IDs from an array', () => {
     }
 
     const result = getEntities<TestEntity>(['abc', 'jkl'])(state)
-    
+
     expect(result).toEqual([state.byId.abc])
 })
 

@@ -7,7 +7,6 @@ type TestEntity = {
     completed: boolean
 }
 
-const getId = (e: TestEntity) => e.id
 const entities: TestEntity[] = [
     { id: 'abc', description: 'item 1', completed: false },
     { id: 'def', description: 'item 2', completed: true },
