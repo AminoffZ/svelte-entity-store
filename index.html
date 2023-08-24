@@ -1,310 +1,129 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>svelte-entity-store</title>
-	<meta name="description" content="Documentation for svelte-entity-store">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">svelte-entity-store</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>svelte-entity-store</h1>
-		</div>
-	</div>
-</header>
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>svelte-entity-store</title><meta name="description" content="Documentation for svelte-entity-store"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/search.js" id="tsd-search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base=".">
+<div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<div class="field">
+<div id="tsd-toolbar-links"></div></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">svelte-entity-store</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
 <div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#svelte-entity-store" id="svelte-entity-store" style="color: inherit; text-decoration: none;">
-					<h1>Svelte Entity Store</h1>
-				</a>
-				<p>A (<strong>w</strong>ork-<strong>i</strong>n-<strong>p</strong>rogress) generic entity store for Svelte projects.</p>
-				<p>Check out the <a href="https://aminoffz.github.io/svelte-entity-store">full docs</a> for details.</p>
-				<a href="#this-fork-🍴" id="this-fork-🍴" style="color: inherit; text-decoration: none;">
-					<h2>This Fork 🍴</h2>
-				</a>
-				<p>Updated to work with latest version of SvelteKit (tested and working on 4.0.5).
-					Added activeId to allow setting and reading an &quot;active&quot; entity similar to <a href="https://opensource.salesforce.com/akita/docs/entities/active/">akita</a>.
-				Added persistency option to allow storing the stores in localStorage.</p>
-				<a href="#why" id="why" style="color: inherit; text-decoration: none;">
-					<h2>Why?</h2>
-				</a>
-				<p>This is ultimately just a <a href="https://svelte.dev/examples/custom-stores">custom store</a> built on top of <a href="https://svelte.dev/docs/svelte-store">svelte/store</a>. Like the rest of Svelte, the built in stores are excellent building blocks that aim to give you all the tools you need without trying to solve every single scenario out of the box.</p>
-				<p>The goal with <code>svelte-entity-store</code> is to provide a simple, generic solution for storing collections of entity objects. Throwing an array of items into a basic <code>writeble</code> store doesn&#39;t scale well if you have a lot of items and need to quickly find or update one item in the store.</p>
-				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
-					<h2>Install</h2>
-				</a>
-				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">install</span><span style="color: #000000"> https:</span><span style="color: #008000">//github.com/AminoffZ/svelte-entity-store/releases/download/v1.0.5/svelte-entity-store-1.0.5.tgz</span>
-</code></pre>
-				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-					<h2>Usage</h2>
-				</a>
-				<blockquote>
-					<p>Check out <a href="/examples">&#39;/examples&#39;</a> for a working TodoMVC demo based on SvelteKit.  More to come!</p>
-				</blockquote>
-				<pre><code class="language-ts"><span style="color: #000000">&lt;</span><span style="color: #001080">script</span><span style="color: #000000"> </span><span style="color: #001080">lang</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;ts&quot;</span><span style="color: #000000">&gt;</span>
-<span style="color: #000000">  </span><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">entityStore</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;svelte-entity-store&#039;</span>
-
-<span style="color: #000000">  </span><span style="color: #008000">// Define your entity interface</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">interface</span><span style="color: #000000"> </span><span style="color: #267F99">TodoItem</span><span style="color: #000000"> {</span>
-<span style="color: #000000">    </span><span style="color: #001080">id</span><span style="color: #000000">: </span><span style="color: #267F99">string</span>
-<span style="color: #000000">    </span><span style="color: #001080">description</span><span style="color: #000000">: </span><span style="color: #267F99">string</span>
-<span style="color: #000000">    </span><span style="color: #001080">completed</span><span style="color: #000000">: </span><span style="color: #267F99">boolean</span>
-<span style="color: #000000">  }</span>
-
-<span style="color: #000000">  </span><span style="color: #008000">// Write a getter function that returns the ID of an entity (can be inlined in the constructor also)</span>
-<span style="color: #000000">  </span><span style="color: #008000">// Currently number and string values are valid IDs</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #795E26">getId</span><span style="color: #000000"> = (</span><span style="color: #001080">todo</span><span style="color: #000000">: </span><span style="color: #267F99">TodoItem</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">todo</span><span style="color: #000000">.</span><span style="color: #001080">id</span>
-
-<span style="color: #000000">  </span><span style="color: #008000">// Initialize the store</span>
-<span style="color: #000000">  </span><span style="color: #008000">// (optional) the constructor accepts an Array as a second param</span>
-<span style="color: #000000">  </span><span style="color: #008000">//            ex: if you rehydrate state from localstorage </span>
-<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">store</span><span style="color: #000000"> = </span><span style="color: #795E26">entityStore</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TodoItem</span><span style="color: #000000">&gt;(</span><span style="color: #001080">getId</span><span style="color: #000000">)</span>
-
-<span style="color: #000000">  </span><span style="color: #008000">// Get a derived store for every active todo</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">activeTodos</span><span style="color: #000000"> = </span><span style="color: #001080">store</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">((</span><span style="color: #001080">todo</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">todo</span><span style="color: #000000">.</span><span style="color: #001080">completed</span><span style="color: #000000">)</span>
-
-<span style="color: #000000">  </span><span style="color: #008000">// toggle a todo</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">toggle</span><span style="color: #000000">(</span><span style="color: #001080">id</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">) {</span>
-<span style="color: #000000">    </span><span style="color: #001080">store</span><span style="color: #000000">.</span><span style="color: #795E26">update</span><span style="color: #000000">((</span><span style="color: #001080">todo</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> ({ ...</span><span style="color: #001080">todo</span><span style="color: #000000">, </span><span style="color: #001080">completed:</span><span style="color: #000000"> !</span><span style="color: #001080">todo</span><span style="color: #000000">.</span><span style="color: #001080">completed</span><span style="color: #000000"> }), </span><span style="color: #001080">id</span><span style="color: #000000">)</span>
-<span style="color: #000000">  }</span>
-
-<span style="color: #000000">  </span><span style="color: #008000">// clear completed todos</span>
-<span style="color: #000000">  </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">clearCompleted</span><span style="color: #000000">() {</span>
-<span style="color: #000000">    </span><span style="color: #001080">store</span><span style="color: #000000">.</span><span style="color: #795E26">remove</span><span style="color: #000000">((</span><span style="color: #001080">todo</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">todo</span><span style="color: #000000">.</span><span style="color: #001080">completed</span><span style="color: #000000">)</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">&lt;/</span><span style="color: #001080">script</span><span style="color: #000000">&gt;</span>
-
-<span style="color: #000000">{#</span><span style="color: #001080">each</span><span style="color: #000000"> </span><span style="color: #001080">$activeTodos</span><span style="color: #000000"> </span><span style="color: #AF00DB">as</span><span style="color: #000000"> </span><span style="color: #267F99">todo</span><span style="color: #000000"> (</span><span style="color: #267F99">todo</span><span style="color: #000000">.</span><span style="color: #267F99">id</span><span style="color: #000000">) }</span>
-<span style="color: #000000">  </span><span style="color: #008000">// ... render your UI as usual</span>
-<span style="color: #000000">{/</span><span style="color: #001080">each</span><span style="color: #000000">}</span>
-</code></pre>
-				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
-					<h2>API</h2>
-				</a>
-				<a href="#entitystoreget" id="entitystoreget" style="color: inherit; text-decoration: none;">
-					<h3>entityStore.get</h3>
-				</a>
-				<p>Gets a <a href="https://svelte.dev/docs#derived">derived store</a> to subscribe to one or more entity in the store.</p>
-				<p>Be careful with how many derived stores you create. It&#39;s best to use <code>entityStore.get</code> at the page or view level and pass state down to <em>dumb</em> components.</p>
-				<p>i.e. If the TodoMVC app has 10,000 todos in it and each list item is a separate component calling <code>entityStore.get(id)</code> the performance and memory use will be a nightmare.  Just don&#39;t do it.  You&#39;ve been warned!</p>
-				<a href="#get" id="get" style="color: inherit; text-decoration: none;">
-					<h4>get()</h4>
-				</a>
-				<p>Gets an array with every entity in the store.</p>
-				<a href="#getid-id" id="getid-id" style="color: inherit; text-decoration: none;">
-					<h4>get(id: ID)</h4>
-				</a>
-				<p>Gets the entity by ID, or undefined if it isn&#39;t found.</p>
-				<a href="#getids-id" id="getids-id" style="color: inherit; text-decoration: none;">
-					<h4>get(ids: ID[])</h4>
-				</a>
-				<p>Gets an array of specific entities by ID.  IDs will be ignored if they aren&#39;t found in the store - the array of entities returned may not be the same length as the <code>ids</code> array provided.</p>
-				<a href="#getactive" id="getactive" style="color: inherit; text-decoration: none;">
-					<h4>getActive()</h4>
-				</a>
-				<p>Gets the active entity.</p>
-				<a href="#getactiveid" id="getactiveid" style="color: inherit; text-decoration: none;">
-					<h4>getActiveId()</h4>
-				</a>
-				<p>Gets the ID of the active entity.</p>
-				<a href="#getpred-predicate" id="getpred-predicate" style="color: inherit; text-decoration: none;">
-					<h4>get(pred: Predicate<T>)</h4>
-				</a>
-				<p>Gets every entity that matches the predicate - the equivalent of <code>Array.prototype.filter()</code></p>
-				<a href="#entitystoreremove" id="entitystoreremove" style="color: inherit; text-decoration: none;">
-					<h3>entityStore.remove</h3>
-				</a>
-				<p>Removes one or more entities from the store.</p>
-				<a href="#removeid-id" id="removeid-id" style="color: inherit; text-decoration: none;">
-					<h4>remove(id: ID)</h4>
-				</a>
-				<p>Removes a specific entity by ID, if it exists</p>
-				<a href="#removeids-id" id="removeids-id" style="color: inherit; text-decoration: none;">
-					<h4>remove(ids: ID[])</h4>
-				</a>
-				<p>Removes one or more entity by ID</p>
-				<a href="#removepred-predicate" id="removepred-predicate" style="color: inherit; text-decoration: none;">
-					<h4>remove(pred: Predicate<T>)</h4>
-				</a>
-				<p>Removes every entity that matches the predicate.  Note that this removes an entity if the predicate returns <strong>true</strong>!</p>
-				<a href="#reset" id="reset" style="color: inherit; text-decoration: none;">
-					<h3>reset</h3>
-				</a>
-				<p>Removes all entities, resetting the entity store to it&#39;s original default state</p>
-				<a href="#entitystoreset" id="entitystoreset" style="color: inherit; text-decoration: none;">
-					<h3>entityStore.set</h3>
-				</a>
-				<p>Adds or replaces entities in the store.  Note that <code>set</code> will override any old state of an entity if it already existed in the store.  Use <code>entityStore.update</code> if you want to modify the entity instead.</p>
-				<a href="#setentity-t" id="setentity-t" style="color: inherit; text-decoration: none;">
-					<h4>set(entity: T)</h4>
-				</a>
-				<p>Adds entity to the store, or replaces the old state if it already exists.</p>
-				<a href="#setentities-t" id="setentities-t" style="color: inherit; text-decoration: none;">
-					<h4>set(entities: T[])</h4>
-				</a>
-				<p>Works just like <code>set(entity: T)</code>, but for each item in the array.  This is useful when you ened to update more than one entity and don&#39;t want to trigger subscribers until all entities are added.</p>
-				<a href="#setactiveentityentity-t" id="setactiveentityentity-t" style="color: inherit; text-decoration: none;">
-					<h4>setActiveEntity(entity: T)</h4>
-				</a>
-				<p>Sets the active entity, takes the entity to set as active as an argument.</p>
-				<a href="#setactiveentityid-id" id="setactiveentityid-id" style="color: inherit; text-decoration: none;">
-					<h4>setActiveEntity(id: ID)</h4>
-				</a>
-				<p>Sets the active entity with its id as an argument.</p>
-				<a href="#entitystoresubscribe" id="entitystoresubscribe" style="color: inherit; text-decoration: none;">
-					<h3>entityStore.subscribe</h3>
-				</a>
-				<p>The <code>subscribe</code> method for the entire store, see <a href="https://svelte.dev/docs#svelte_store">Svelte&#39;s docs</a> for more details on the subscribe API.</p>
-				<p>You really shouldn&#39;t need to use this subscribe method unless you&#39;re tying the entire store into <code>devtools</code> or logging.</p>
-				<a href="#entitystoreupdate" id="entitystoreupdate" style="color: inherit; text-decoration: none;">
-					<h3>entityStore.update</h3>
-				</a>
-				<p>Updates one or more entity in the store.</p>
-				<p>This follows the same basic design as <a href="https://svelte.dev/examples#writable-stores">writable stores</a> - rather than providing the new entity state you give a callback function that will be given the old entity and returns the new, updated entity.</p>
-				<a href="#updateupdater-entityt--gt-t" id="updateupdater-entityt--gt-t" style="color: inherit; text-decoration: none;">
-					<h4>update(updater: (entity:T ) =&gt; T)</h4>
-				</a>
-				<p>Runs every entity in the store through the <code>updater</code> callback.  Check out the (&#39;/examples/todomvc&#39;)[/examples/todomvc] project, this is used for the &quot;toggle all todos&quot; feature.</p>
-				<a href="#updateupdater-entity-t-gt-t-id-id" id="updateupdater-entity-t-gt-t-id-id" style="color: inherit; text-decoration: none;">
-					<h4>update(updater: (entity: T) =&gt; T, id: ID)</h4>
-				</a>
-				<p>Runs a specific entity through the updater callback.  <code>updater</code> will never be called if the entity isn&#39;t found in the store.</p>
-				<a href="#updateupdater-entity-t-gt-t-ids-id" id="updateupdater-entity-t-gt-t-ids-id" style="color: inherit; text-decoration: none;">
-					<h4>update(updater: (entity: T) =&gt; T, ids: ID[])</h4>
-				</a>
-				<p>Runs multiple entities through the updater function.  This is useful when you ened to update more than one entity and don&#39;t want to trigger subscribers until all entities are updated.</p>
-				<a href="#updateupdater-entity-t-gt-t-entity-t" id="updateupdater-entity-t-gt-t-entity-t" style="color: inherit; text-decoration: none;">
-					<h4>update(updater: (entity: T) =&gt; T, entity: T)</h4>
-				</a>
-				<p>Convenience override in case your code is already using the entire entity, avoids having to do something like <code>update(toggle, todo.id)</code>.</p>
-				<a href="#updateupdater-entity-t-gt-t-entities-t" id="updateupdater-entity-t-gt-t-entities-t" style="color: inherit; text-decoration: none;">
-					<h4>update(updater: (entity: T) =&gt; T, entities: T[])</h4>
-				</a>
-				<p>Works just like <code>update(updater, entities: T[])</code>, but for each item in the array.  This is useful when you ened to update more than one entity and don&#39;t want to trigger subscribers until all entities are added.</p>
-				<a href="#updateupdater-entity-t-gt-t-pred-predicate" id="updateupdater-entity-t-gt-t-pred-predicate" style="color: inherit; text-decoration: none;">
-					<h4>update(updater: (entity: T) =&gt; T, pred: Predicate<T>)</h4>
-				</a>
-				<p>Runs every entity that matches the predicate through the <code>updater</code> callback.  The predicate works just like <code>Array.prototype.filter</code>, every entity is run through the predicate and if it returns <strong>true</strong> the entity is updated.</p>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Modules</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/entity_store.html">entity-<wbr>store</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/index.html">index</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/internal_get_active_entity.html">internal/get-<wbr>active-<wbr>entity</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/internal_get_active_entity_id.html">internal/get-<wbr>active-<wbr>entity-<wbr>id</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/internal_get_entities.html">internal/get-<wbr>entities</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/internal_hydrate_active_id.html">internal/hydrate-<wbr>active-<wbr>id</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/internal_hydrate_entities.html">internal/hydrate-<wbr>entities</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/internal_normalize.html">internal/normalize</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/internal_persist_store.html">internal/persist-<wbr>store</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/internal_remove_entities.html">internal/remove-<wbr>entities</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/internal_set_active_entity.html">internal/set-<wbr>active-<wbr>entity</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/internal_set_entities.html">internal/set-<wbr>entities</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/internal_update_entities.html">internal/update-<wbr>entities</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/shared.html">shared</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<div class="col-content">
+<div class="tsd-page-title">
+<h2>svelte-entity-store</h2></div>
+<div class="tsd-panel tsd-typography"><a id="md:svelte-entity-store" class="tsd-anchor"></a><h1><a href="#md:svelte-entity-store">Svelte Entity Store</a></h1><p>A (<strong>w</strong>ork-<strong>i</strong>n-<strong>p</strong>rogress) generic entity store for Svelte projects.</p>
+<p>Check out the <a href="https://aminoffz.github.io/svelte-entity-store">full docs</a> for details.</p>
+<a id="md:this-fork-🍴" class="tsd-anchor"></a><h2><a href="#md:this-fork-🍴">This Fork 🍴</a></h2><p>Updated to work with latest version of SvelteKit (tested and working on 4.0.5).
+Added activeId to allow setting and reading an &quot;active&quot; entity similar to <a href="https://opensource.salesforce.com/akita/docs/entities/active/">akita</a>.
+Added persistency option to allow storing the stores in localStorage.</p>
+<a id="md:why" class="tsd-anchor"></a><h2><a href="#md:why">Why?</a></h2><p>This is ultimately just a <a href="https://svelte.dev/examples/custom-stores">custom store</a> built on top of <a href="https://svelte.dev/docs/svelte-store">svelte/store</a>. Like the rest of Svelte, the built in stores are excellent building blocks that aim to give you all the tools you need without trying to solve every single scenario out of the box.</p>
+<p>The goal with <code>svelte-entity-store</code> is to provide a simple, generic solution for storing collections of entity objects. Throwing an array of items into a basic <code>writeble</code> store doesn&#39;t scale well if you have a lot of items and need to quickly find or update one item in the store.</p>
+<a id="md:install" class="tsd-anchor"></a><h2><a href="#md:install">Install</a></h2><pre><code><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">install</span><span class="hl-1"> </span><span class="hl-2">https</span><span class="hl-1">:</span><span class="hl-3">//github.com/AminoffZ/svelte-entity-store/releases/download/v1.0.5/svelte-entity-store-1.0.5.tgz</span>
+</code><button>Copy</button></pre>
+<a id="md:usage" class="tsd-anchor"></a><h2><a href="#md:usage">Usage</a></h2><blockquote>
+<p>Check out <a href="/examples">&#39;/examples&#39;</a> for a working TodoMVC demo based on SvelteKit. More to come!</p>
+</blockquote>
+<pre><code class="language-ts"><span class="hl-1">&lt;</span><span class="hl-0">script</span><span class="hl-1"> </span><span class="hl-0">lang</span><span class="hl-1">=</span><span class="hl-4">&quot;ts&quot;</span><span class="hl-1">&gt;</span><br/><span class="hl-1">  </span><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-0">entityStore</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-4">&#39;svelte-entity-store&#39;</span><br/><br/><span class="hl-1">  </span><span class="hl-3">// Define your entity interface</span><br/><span class="hl-1">  </span><span class="hl-6">interface</span><span class="hl-1"> </span><span class="hl-7">TodoItem</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-0">id</span><span class="hl-1">: </span><span class="hl-7">string</span><br/><span class="hl-1">    </span><span class="hl-0">description</span><span class="hl-1">: </span><span class="hl-7">string</span><br/><span class="hl-1">    </span><span class="hl-0">completed</span><span class="hl-1">: </span><span class="hl-7">boolean</span><br/><span class="hl-1">  }</span><br/><br/><span class="hl-1">  </span><span class="hl-3">// Write a getter function that returns the ID of an entity (can be inlined in the constructor also)</span><br/><span class="hl-1">  </span><span class="hl-3">// Currently number and string values are valid IDs</span><br/><span class="hl-1">  </span><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-8">getId</span><span class="hl-1"> = (</span><span class="hl-0">todo</span><span class="hl-1">: </span><span class="hl-7">TodoItem</span><span class="hl-1">) </span><span class="hl-6">=&gt;</span><span class="hl-1"> </span><span class="hl-0">todo</span><span class="hl-1">.</span><span class="hl-0">id</span><br/><br/><span class="hl-1">  </span><span class="hl-3">// Initialize the store</span><br/><span class="hl-1">  </span><span class="hl-3">// (optional) the constructor accepts an Array as a second param</span><br/><span class="hl-1">  </span><span class="hl-3">//            ex: if you rehydrate state from localstorage</span><br/><span class="hl-1">  </span><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-9">store</span><span class="hl-1"> = </span><span class="hl-8">entityStore</span><span class="hl-1">&lt;</span><span class="hl-7">TodoItem</span><span class="hl-1">&gt;(</span><span class="hl-0">getId</span><span class="hl-1">)</span><br/><br/><span class="hl-1">  </span><span class="hl-3">// Get a derived store for every active todo</span><br/><span class="hl-1">  </span><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-9">activeTodos</span><span class="hl-1"> = </span><span class="hl-0">store</span><span class="hl-1">.</span><span class="hl-8">get</span><span class="hl-1">((</span><span class="hl-0">todo</span><span class="hl-1">) </span><span class="hl-6">=&gt;</span><span class="hl-1"> </span><span class="hl-0">todo</span><span class="hl-1">.</span><span class="hl-0">completed</span><span class="hl-1">)</span><br/><br/><span class="hl-1">  </span><span class="hl-3">// toggle a todo</span><br/><span class="hl-1">  </span><span class="hl-6">function</span><span class="hl-1"> </span><span class="hl-8">toggle</span><span class="hl-1">(</span><span class="hl-0">id</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-0">store</span><span class="hl-1">.</span><span class="hl-8">update</span><span class="hl-1">((</span><span class="hl-0">todo</span><span class="hl-1">) </span><span class="hl-6">=&gt;</span><span class="hl-1"> ({ ...</span><span class="hl-0">todo</span><span class="hl-1">, </span><span class="hl-0">completed:</span><span class="hl-1"> !</span><span class="hl-0">todo</span><span class="hl-1">.</span><span class="hl-0">completed</span><span class="hl-1"> }), </span><span class="hl-0">id</span><span class="hl-1">)</span><br/><span class="hl-1">  }</span><br/><br/><span class="hl-1">  </span><span class="hl-3">// clear completed todos</span><br/><span class="hl-1">  </span><span class="hl-6">function</span><span class="hl-1"> </span><span class="hl-8">clearCompleted</span><span class="hl-1">() {</span><br/><span class="hl-1">    </span><span class="hl-0">store</span><span class="hl-1">.</span><span class="hl-8">remove</span><span class="hl-1">((</span><span class="hl-0">todo</span><span class="hl-1">) </span><span class="hl-6">=&gt;</span><span class="hl-1"> </span><span class="hl-0">todo</span><span class="hl-1">.</span><span class="hl-0">completed</span><span class="hl-1">)</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">&lt;/</span><span class="hl-0">script</span><span class="hl-1">&gt;</span><br/><br/><span class="hl-1">{#</span><span class="hl-0">each</span><span class="hl-1"> </span><span class="hl-0">$activeTodos</span><span class="hl-1"> </span><span class="hl-5">as</span><span class="hl-1"> </span><span class="hl-7">todo</span><span class="hl-1"> (</span><span class="hl-7">todo</span><span class="hl-1">.</span><span class="hl-7">id</span><span class="hl-1">) }</span><br/><span class="hl-1">  </span><span class="hl-3">// ... render your UI as usual</span><br/><span class="hl-1">{/</span><span class="hl-0">each</span><span class="hl-1">}</span>
+</code><button>Copy</button></pre>
+<a id="md:api" class="tsd-anchor"></a><h2><a href="#md:api">API</a></h2><a id="md:entitystoreget" class="tsd-anchor"></a><h3><a href="#md:entitystoreget">entityStore.get</a></h3><p>Gets a <a href="https://svelte.dev/docs#derived">derived store</a> to subscribe to one or more entity in the store.</p>
+<p>Be careful with how many derived stores you create. It&#39;s best to use <code>entityStore.get</code> at the page or view level and pass state down to <em>dumb</em> components.</p>
+<p>i.e. If the TodoMVC app has 10,000 todos in it and each list item is a separate component calling <code>entityStore.get(id)</code> the performance and memory use will be a nightmare. Just don&#39;t do it. You&#39;ve been warned!</p>
+<a id="md:get" class="tsd-anchor"></a><h4><a href="#md:get">get()</a></h4><p>Gets an array with every entity in the store.</p>
+<a id="md:getid-id" class="tsd-anchor"></a><h4><a href="#md:getid-id">get(id: ID)</a></h4><p>Gets the entity by ID, or undefined if it isn&#39;t found.</p>
+<a id="md:getids-id" class="tsd-anchor"></a><h4><a href="#md:getids-id">get(ids: ID[])</a></h4><p>Gets an array of specific entities by ID. IDs will be ignored if they aren&#39;t found in the store - the array of entities returned may not be the same length as the <code>ids</code> array provided.</p>
+<a id="md:getactive" class="tsd-anchor"></a><h4><a href="#md:getactive">getActive()</a></h4><p>Gets the active entity.</p>
+<a id="md:getactiveid" class="tsd-anchor"></a><h4><a href="#md:getactiveid">getActiveId()</a></h4><p>Gets the ID of the active entity.</p>
+<a id="md:getpred-predicate" class="tsd-anchor"></a><h4><a href="#md:getpred-predicate">get(pred: Predicate<T>)</a></h4><p>Gets every entity that matches the predicate - the equivalent of <code>Array.prototype.filter()</code></p>
+<a id="md:entitystoreremove" class="tsd-anchor"></a><h3><a href="#md:entitystoreremove">entityStore.remove</a></h3><p>Removes one or more entities from the store.</p>
+<a id="md:removeid-id" class="tsd-anchor"></a><h4><a href="#md:removeid-id">remove(id: ID)</a></h4><p>Removes a specific entity by ID, if it exists</p>
+<a id="md:removeids-id" class="tsd-anchor"></a><h4><a href="#md:removeids-id">remove(ids: ID[])</a></h4><p>Removes one or more entity by ID</p>
+<a id="md:removepred-predicate" class="tsd-anchor"></a><h4><a href="#md:removepred-predicate">remove(pred: Predicate<T>)</a></h4><p>Removes every entity that matches the predicate. Note that this removes an entity if the predicate returns <strong>true</strong>!</p>
+<a id="md:reset" class="tsd-anchor"></a><h3><a href="#md:reset">reset</a></h3><p>Removes all entities, resetting the entity store to it&#39;s original default state</p>
+<a id="md:entitystoreset" class="tsd-anchor"></a><h3><a href="#md:entitystoreset">entityStore.set</a></h3><p>Adds or replaces entities in the store. Note that <code>set</code> will override any old state of an entity if it already existed in the store. Use <code>entityStore.update</code> if you want to modify the entity instead.</p>
+<a id="md:setentity-t" class="tsd-anchor"></a><h4><a href="#md:setentity-t">set(entity: T)</a></h4><p>Adds entity to the store, or replaces the old state if it already exists.</p>
+<a id="md:setentities-t" class="tsd-anchor"></a><h4><a href="#md:setentities-t">set(entities: T[])</a></h4><p>Works just like <code>set(entity: T)</code>, but for each item in the array. This is useful when you ened to update more than one entity and don&#39;t want to trigger subscribers until all entities are added.</p>
+<a id="md:setactiveentityentity-t" class="tsd-anchor"></a><h4><a href="#md:setactiveentityentity-t">setActiveEntity(entity: T)</a></h4><p>Sets the active entity, takes the entity to set as active as an argument.</p>
+<a id="md:setactiveentityid-id" class="tsd-anchor"></a><h4><a href="#md:setactiveentityid-id">setActiveEntity(id: ID)</a></h4><p>Sets the active entity with its id as an argument.</p>
+<a id="md:entitystoresubscribe" class="tsd-anchor"></a><h3><a href="#md:entitystoresubscribe">entityStore.subscribe</a></h3><p>The <code>subscribe</code> method for the entire store, see <a href="https://svelte.dev/docs#svelte_store">Svelte&#39;s docs</a> for more details on the subscribe API.</p>
+<p>You really shouldn&#39;t need to use this subscribe method unless you&#39;re tying the entire store into <code>devtools</code> or logging.</p>
+<a id="md:entitystoreupdate" class="tsd-anchor"></a><h3><a href="#md:entitystoreupdate">entityStore.update</a></h3><p>Updates one or more entity in the store.</p>
+<p>This follows the same basic design as <a href="https://svelte.dev/examples#writable-stores">writable stores</a> - rather than providing the new entity state you give a callback function that will be given the old entity and returns the new, updated entity.</p>
+<a id="md:updateupdater-entityt--gt-t" class="tsd-anchor"></a><h4><a href="#md:updateupdater-entityt--gt-t">update(updater: (entity:T ) =&gt; T)</a></h4><p>Runs every entity in the store through the <code>updater</code> callback. Check out the (&#39;/examples/todomvc&#39;)[/examples/todomvc] project, this is used for the &quot;toggle all todos&quot; feature.</p>
+<a id="md:updateupdater-entity-t-gt-t-id-id" class="tsd-anchor"></a><h4><a href="#md:updateupdater-entity-t-gt-t-id-id">update(updater: (entity: T) =&gt; T, id: ID)</a></h4><p>Runs a specific entity through the updater callback. <code>updater</code> will never be called if the entity isn&#39;t found in the store.</p>
+<a id="md:updateupdater-entity-t-gt-t-ids-id" class="tsd-anchor"></a><h4><a href="#md:updateupdater-entity-t-gt-t-ids-id">update(updater: (entity: T) =&gt; T, ids: ID[])</a></h4><p>Runs multiple entities through the updater function. This is useful when you ened to update more than one entity and don&#39;t want to trigger subscribers until all entities are updated.</p>
+<a id="md:updateupdater-entity-t-gt-t-entity-t" class="tsd-anchor"></a><h4><a href="#md:updateupdater-entity-t-gt-t-entity-t">update(updater: (entity: T) =&gt; T, entity: T)</a></h4><p>Convenience override in case your code is already using the entire entity, avoids having to do something like <code>update(toggle, todo.id)</code>.</p>
+<a id="md:updateupdater-entity-t-gt-t-entities-t" class="tsd-anchor"></a><h4><a href="#md:updateupdater-entity-t-gt-t-entities-t">update(updater: (entity: T) =&gt; T, entities: T[])</a></h4><p>Works just like <code>update(updater, entities: T[])</code>, but for each item in the array. This is useful when you ened to update more than one entity and don&#39;t want to trigger subscribers until all entities are added.</p>
+<a id="md:updateupdater-entity-t-gt-t-pred-predicate" class="tsd-anchor"></a><h4><a href="#md:updateupdater-entity-t-gt-t-pred-predicate">update(updater: (entity: T) =&gt; T, pred: Predicate<T>)</a></h4><p>Runs every entity that matches the predicate through the <code>updater</code> callback. The predicate works just like <code>Array.prototype.filter</code>, every entity is run through the predicate and if it returns <strong>true</strong> the entity is updated.</p>
+</div></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)" id="icon-chevronDown"></path></svg>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-index-accordion tsd-page-navigation"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#icon-chevronDown"></use></svg>On This Page</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li>
+<ul>
+<li><a href="#md:svelte-entity-store"><span>Svelte <wbr/>Entity <wbr/>Store</span></a></li>
+<li>
+<ul>
+<li><a href="#md:this-fork-🍴"><span>This <wbr/>Fork 🍴</span></a></li>
+<li><a href="#md:why"><span>Why?</span></a></li>
+<li><a href="#md:install"><span>Install</span></a></li>
+<li><a href="#md:usage"><span>Usage</span></a></li>
+<li><a href="#md:api"><span>API</span></a></li>
+<li>
+<ul>
+<li><a href="#md:entitystoreget"><span>entity<wbr/>Store.get</span></a></li>
+<li>
+<ul>
+<li><a href="#md:get"><span>get()</span></a></li>
+<li><a href="#md:getid-id"><span>get(id: ID)</span></a></li>
+<li><a href="#md:getids-id"><span>get(ids: ID[])</span></a></li>
+<li><a href="#md:getactive"><span>get<wbr/>Active()</span></a></li>
+<li><a href="#md:getactiveid"><span>get<wbr/>Active<wbr/>Id()</span></a></li>
+<li><a href="#md:getpred-predicate"><span>get(pred: <wbr/>Predicate)</span></a></li></ul></li>
+<li><a href="#md:entitystoreremove"><span>entity<wbr/>Store.remove</span></a></li>
+<li>
+<ul>
+<li><a href="#md:removeid-id"><span>remove(id: ID)</span></a></li>
+<li><a href="#md:removeids-id"><span>remove(ids: ID[])</span></a></li>
+<li><a href="#md:removepred-predicate"><span>remove(pred: <wbr/>Predicate)</span></a></li></ul></li>
+<li><a href="#md:reset"><span>reset</span></a></li>
+<li><a href="#md:entitystoreset"><span>entity<wbr/>Store.set</span></a></li>
+<li>
+<ul>
+<li><a href="#md:setentity-t"><span>set(entity: <wbr/>T)</span></a></li>
+<li><a href="#md:setentities-t"><span>set(entities: <wbr/>T[])</span></a></li>
+<li><a href="#md:setactiveentityentity-t"><span>set<wbr/>Active<wbr/>Entity(entity: <wbr/>T)</span></a></li>
+<li><a href="#md:setactiveentityid-id"><span>set<wbr/>Active<wbr/>Entity(id: ID)</span></a></li></ul></li>
+<li><a href="#md:entitystoresubscribe"><span>entity<wbr/>Store.subscribe</span></a></li>
+<li><a href="#md:entitystoreupdate"><span>entity<wbr/>Store.update</span></a></li>
+<li>
+<ul>
+<li><a href="#md:updateupdater-entityt--gt-t"><span>update(updater: (entity:<wbr/>T ) =&gt; <wbr/>T)</span></a></li>
+<li><a href="#md:updateupdater-entity-t-gt-t-id-id"><span>update(updater: (entity: <wbr/>T) =&gt; <wbr/>T, id: ID)</span></a></li>
+<li><a href="#md:updateupdater-entity-t-gt-t-ids-id"><span>update(updater: (entity: <wbr/>T) =&gt; <wbr/>T, ids: ID[])</span></a></li>
+<li><a href="#md:updateupdater-entity-t-gt-t-entity-t"><span>update(updater: (entity: <wbr/>T) =&gt; <wbr/>T, entity: <wbr/>T)</span></a></li>
+<li><a href="#md:updateupdater-entity-t-gt-t-entities-t"><span>update(updater: (entity: <wbr/>T) =&gt; <wbr/>T, entities: <wbr/>T[])</span></a></li>
+<li><a href="#md:updateupdater-entity-t-gt-t-pred-predicate"><span>update(updater: (entity: <wbr/>T) =&gt; <wbr/>T, pred: <wbr/>Predicate)</span></a></li></ul></li></ul></li></ul></li></ul></li></ul></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="modules.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-namespace)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.33 16V7.24H10.77L13.446 14.74C13.43 14.54 13.41 14.296 13.386 14.008C13.37 13.712 13.354 13.404 13.338 13.084C13.33 12.756 13.326 12.448 13.326 12.16V7.24H14.37V16H12.93L10.266 8.5C10.282 8.692 10.298 8.936 10.314 9.232C10.33 9.52 10.342 9.828 10.35 10.156C10.366 10.476 10.374 10.784 10.374 11.08V16H9.33Z" fill="var(--color-text)"></path></g></svg><span>svelte-<wbr/>entity-<wbr/>store</span></a>
+<ul class="tsd-small-nested-navigation">
+<li><a href="functions/entityStore.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-64"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-function)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.39 16V7.24H14.55V8.224H10.446V11.128H14.238V12.112H10.47V16H9.39Z" fill="var(--color-text)"></path></g></svg><span>entity<wbr/>Store</span></a></li></ul></nav></div></div></div>
+<div class="tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div></body></html>
