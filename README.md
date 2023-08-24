@@ -19,7 +19,7 @@ The goal with `svelte-entity-store` is to provide a simple, generic solution for
 ## Install
 
 ```
-npm install https://github.com/AminoffZ/svelte-entity-store/releases/download/v1.0.5/svelte-entity-store-1.0.5.tgz
+npm install https://github.com/AminoffZ/svelte-entity-store/releases/download/v1.0.7/svelte-entity-store-1.0.7.tgz
 ```
 
 ## Usage
