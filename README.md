@@ -24,7 +24,7 @@ npm install https://github.com/AminoffZ/svelte-entity-store/releases/download/v1
 
 ## Usage
 
-> Check out ['/examples'](/examples) for a working TodoMVC demo based on SvelteKit.  More to come!
+> Check out ['/examples'](/examples) for a working TodoMVC demo based on SvelteKit. More to come!
 
 ```ts
 <script lang="ts">
@@ -43,7 +43,7 @@ npm install https://github.com/AminoffZ/svelte-entity-store/releases/download/v1
 
   // Initialize the store
   // (optional) the constructor accepts an Array as a second param
-  //            ex: if you rehydrate state from localstorage 
+  //            ex: if you rehydrate state from localstorage
   const store = entityStore<TodoItem>(getId)
 
   // Get a derived store for every active todo
@@ -71,9 +71,9 @@ npm install https://github.com/AminoffZ/svelte-entity-store/releases/download/v1
 
 Gets a [derived store](https://svelte.dev/docs#derived) to subscribe to one or more entity in the store.
 
-Be careful with how many derived stores you create. It's best to use `entityStore.get` at the page or view level and pass state down to *dumb* components.
+Be careful with how many derived stores you create. It's best to use `entityStore.get` at the page or view level and pass state down to _dumb_ components.
 
-i.e. If the TodoMVC app has 10,000 todos in it and each list item is a separate component calling `entityStore.get(id)` the performance and memory use will be a nightmare.  Just don't do it.  You've been warned!
+i.e. If the TodoMVC app has 10,000 todos in it and each list item is a separate component calling `entityStore.get(id)` the performance and memory use will be a nightmare. Just don't do it. You've been warned!
 
 #### get()
 
@@ -85,7 +85,7 @@ Gets the entity by ID, or undefined if it isn't found.
 
 #### get(ids: ID[])
 
-Gets an array of specific entities by ID.  IDs will be ignored if they aren't found in the store - the array of entities returned may not be the same length as the `ids` array provided.
+Gets an array of specific entities by ID. IDs will be ignored if they aren't found in the store - the array of entities returned may not be the same length as the `ids` array provided.
 
 #### getActive()
 
@@ -113,7 +113,7 @@ Removes one or more entity by ID
 
 #### remove(pred: Predicate<T>)
 
-Removes every entity that matches the predicate.  Note that this removes an entity if the predicate returns **true**!
+Removes every entity that matches the predicate. Note that this removes an entity if the predicate returns **true**!
 
 ### reset
 
@@ -121,7 +121,7 @@ Removes all entities, resetting the entity store to it's original default state
 
 ### entityStore.set
 
-Adds or replaces entities in the store.  Note that `set` will override any old state of an entity if it already existed in the store.  Use `entityStore.update` if you want to modify the entity instead.
+Adds or replaces entities in the store. Note that `set` will override any old state of an entity if it already existed in the store. Use `entityStore.update` if you want to modify the entity instead.
 
 #### set(entity: T)
 
@@ -129,7 +129,7 @@ Adds entity to the store, or replaces the old state if it already exists.
 
 #### set(entities: T[])
 
-Works just like `set(entity: T)`, but for each item in the array.  This is useful when you ened to update more than one entity and don't want to trigger subscribers until all entities are added.
+Works just like `set(entity: T)`, but for each item in the array. This is useful when you ened to update more than one entity and don't want to trigger subscribers until all entities are added.
 
 #### setActiveEntity(entity: T)
 
@@ -153,15 +153,15 @@ This follows the same basic design as [writable stores](https://svelte.dev/examp
 
 #### update(updater: (entity:T ) => T)
 
-Runs every entity in the store through the `updater` callback.  Check out the ('/examples/todomvc')[/examples/todomvc] project, this is used for the "toggle all todos" feature.
+Runs every entity in the store through the `updater` callback. Check out the ('/examples/todomvc')[/examples/todomvc] project, this is used for the "toggle all todos" feature.
 
 #### update(updater: (entity: T) => T, id: ID)
 
-Runs a specific entity through the updater callback.  `updater` will never be called if the entity isn't found in the store.
+Runs a specific entity through the updater callback. `updater` will never be called if the entity isn't found in the store.
 
 #### update(updater: (entity: T) => T, ids: ID[])
 
-Runs multiple entities through the updater function.  This is useful when you ened to update more than one entity and don't want to trigger subscribers until all entities are updated.
+Runs multiple entities through the updater function. This is useful when you ened to update more than one entity and don't want to trigger subscribers until all entities are updated.
 
 #### update(updater: (entity: T) => T, entity: T)
 
@@ -169,8 +169,8 @@ Convenience override in case your code is already using the entire entity, avoid
 
 #### update(updater: (entity: T) => T, entities: T[])
 
-Works just like `update(updater, entities: T[])`, but for each item in the array.  This is useful when you ened to update more than one entity and don't want to trigger subscribers until all entities are added.
+Works just like `update(updater, entities: T[])`, but for each item in the array. This is useful when you ened to update more than one entity and don't want to trigger subscribers until all entities are added.
 
 #### update(updater: (entity: T) => T, pred: Predicate<T>)
 
-Runs every entity that matches the predicate through the `updater` callback.  The predicate works just like `Array.prototype.filter`, every entity is run through the predicate and if it returns **true** the entity is updated.
+Runs every entity that matches the predicate through the `updater` callback. The predicate works just like `Array.prototype.filter`, every entity is run through the predicate and if it returns **true** the entity is updated.

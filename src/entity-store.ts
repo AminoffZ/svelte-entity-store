@@ -1,18 +1,16 @@
-import type { Readable, Subscriber, Unsubscriber } from 'svelte/store'
-import { Updater, derived, writable } from 'svelte/store'
-import { getActiveEntity } from './internal/get-active-entity'
-import { getActiveEntityId } from './internal/get-active-entity-id'
-import { getEntities } from './internal/get-entities'
-import { hydrateEntities } from './internal/hydrate-entities'
-import type { Normalized } from './internal/normalize'
-import { normalize } from './internal/normalize'
-import { persistStore } from './internal/persist-store'
+import { Readable, Subscriber, Unsubscriber, Updater, derived, writable } from 'svelte/store'
+import { EntityStoreOptions, GetID, ID, Predicate } from './shared'
+import { Normalized, normalize } from './internal/normalize'
 import { removeEntities } from './internal/remove-entities'
-import { setActiveEntity } from './internal/set-active-entity'
 import { setEntities } from './internal/set-entities'
 import { updateEntities } from './internal/update-entities'
-import type { EntityStoreOptions, GetID, ID, Predicate } from './shared'
+import { setActiveEntity } from './internal/set-active-entity'
+import { getEntities } from './internal/get-entities'
+import { getActiveEntity } from './internal/get-active-entity'
+import { getActiveEntityId } from './internal/get-active-entity-id'
+import { hydrateEntities } from './internal/hydrate-entities'
 import { hydrateActiveId } from './internal/hydrate-active-id'
+import { persistStore } from './internal/persist-store'
 
 declare type Invalidator<T> = (value?: T) => void
 declare type Subscribe<T> = (this: void, run: Subscriber<T>, invalidate?: Invalidator<T>) => Unsubscriber
@@ -34,7 +32,7 @@ export type EntityStore<T> = {
      * @param id ID of the entity to find
      * @returns Entity object if found, undefined otherwise
      */
-    get(id: ID): Readable<T| undefined>
+    get(id: ID): Readable<T | undefined>
 
     /**
      * Gets a derived store containing a list of all entities found by ID.
@@ -56,7 +54,7 @@ export type EntityStore<T> = {
 
     /**
      * Gets the ID of the active entity.
-     * 
+     *
      * @returns ID of the active entity, undefined otherwise
      */
     getActiveId(): Readable<ID | undefined>
@@ -66,7 +64,7 @@ export type EntityStore<T> = {
      *
      * @returns Entitiy, undefined otherwise
      */
-    getActive(): Readable<T| undefined>
+    getActive(): Readable<T | undefined>
 
     /**
      * Removes the entity from the store, if found.
@@ -273,13 +271,12 @@ function createEntityStore<T>(getID: GetID<T>, initial: T[], activeId?: ID) {
         getActive,
         getActiveId,
         setActive,
-    };
+    }
 }
-
 
 /**
  * Creates a new entity store that persists to local storage.
- * 
+ *
  * @typeParam T Entity type being stored
  * @param getID Function that returns the ID of an entity
  * @param initial (optional) Initial array of items to be stored
@@ -287,39 +284,43 @@ function createEntityStore<T>(getID: GetID<T>, initial: T[], activeId?: ID) {
  * @returns Entity store
  */
 function createPersistantEntityStore<T>(getID: GetID<T>, initial: T[] = [], key: string) {
-    initial = hydrateEntities<T>(key, initial);
-    const activeId = hydrateActiveId<T>(key);
-    const entityStore = createEntityStore<T>(getID, initial, activeId);
-    persistStore<T>(entityStore, key);
-    return entityStore;
+    initial = hydrateEntities<T>(key, initial)
+    const activeId = hydrateActiveId<T>(key)
+    const entityStore = createEntityStore<T>(getID, initial, activeId)
+    persistStore<T>(entityStore, key)
+    return entityStore
 }
 
 /**
  * Creates a new entity store.
- * 
+ *
  * @typeParam T Entity type being stored
  * @param getID Function that returns the ID of an entity
  * @param initial (optional) Initial array of items to be stored
  * @param options (optional) Options for the store
  * @returns Entity store
  */
-export function entityStore<T>(getID: GetID<T>, initial?: T[]): EntityStore<T>;
-export function entityStore<T>(getID: GetID<T>, options: EntityStoreOptions): EntityStore<T>;
-export function entityStore<T>(getID: GetID<T>, initial: T[], options: EntityStoreOptions): EntityStore<T>;
-export function entityStore<T>(getID: GetID<T>, initialOrOptions?: T[] | EntityStoreOptions, options?: EntityStoreOptions): EntityStore<T> {
-    let initial: T[] = [];
+export function entityStore<T>(getID: GetID<T>, initial?: T[]): EntityStore<T>
+export function entityStore<T>(getID: GetID<T>, options: EntityStoreOptions): EntityStore<T>
+export function entityStore<T>(getID: GetID<T>, initial: T[], options: EntityStoreOptions): EntityStore<T>
+export function entityStore<T>(
+    getID: GetID<T>,
+    initialOrOptions?: T[] | EntityStoreOptions,
+    options?: EntityStoreOptions,
+): EntityStore<T> {
+    let initial: T[] = []
     try {
         if (Array.isArray(initialOrOptions)) {
-            initial = initialOrOptions;
+            initial = initialOrOptions
         } else if (initialOrOptions) {
-            options = initialOrOptions;
+            options = initialOrOptions
         }
         if (options?.persist) {
-            return createPersistantEntityStore<T>(getID, initial, options.storageKey);
-        } 
-        return createEntityStore<T>(getID, initial);
+            return createPersistantEntityStore<T>(getID, initial, options.storageKey)
+        }
+        return createEntityStore<T>(getID, initial)
     } catch (e) {
-        console.error(e);
-        return;
+        // console.error(e)
+        return
     }
 }

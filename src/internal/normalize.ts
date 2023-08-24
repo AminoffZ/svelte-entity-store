@@ -28,15 +28,17 @@ export type Normalized<T> = {
  * @param getID Function that returns the ID of an entity
  * @returns Noramlized state holding the given items
  */
-export const normalize = <T>(getID: GetID<T>, activeId?: ID) => (items: T[]) => {
-    return items.reduce(
-        ({ byId, allIds, activeId }, next) => {
-            const id = getID(next)
-            byId[id] = next
-            allIds.push(id)
+export const normalize =
+    <T>(getID: GetID<T>, activeId?: ID) =>
+    (items: T[]) => {
+        return items.reduce(
+            ({ byId, allIds, activeId }, next) => {
+                const id = getID(next)
+                byId[id] = next
+                allIds.push(id)
 
-            return { byId, allIds, activeId }
-        },
-        { byId: {}, allIds: [], activeId: activeId } as Normalized<T>,
-    );
-}
+                return { byId, allIds, activeId }
+            },
+            { byId: {}, allIds: [], activeId: activeId } as Normalized<T>,
+        )
+    }
