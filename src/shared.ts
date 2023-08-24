@@ -27,32 +27,34 @@ export type Predicate<T> = (t: T) => boolean
 
 /**
  * Checks if the code is running in a browser
- * 
+ *
  * @returns {boolean} true if the code is running in a browser, false otherwise
  */
 export function hasLocalStorage(): boolean {
-    return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+    return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
 }
 
 /**
  * Options for the EntityStore
- * 
+ *
  * @property persist Whether or not to persist the store to local storage
  * @property storageKey Key to use for local storage
- * 
+ *
  * @example
  * const options: EntityStoreOptions = {
  *    persist: true,
  *   storageKey: 'my-store'
  * }
- * 
+ *
  * const store = entityStore(getID, options)
  * // or
  * const store = entityStore(getID, initial, options)
  */
-export type EntityStoreOptions = {
-    persist: true;
-    storageKey: string;
-  } | {
-    persist?: false;
-  };
+export type EntityStoreOptions =
+    | {
+          persist: true
+          storageKey: string
+      }
+    | {
+          persist?: false
+      }

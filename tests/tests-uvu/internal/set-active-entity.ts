@@ -3,7 +3,6 @@ import * as assert from 'uvu/assert'
 import { Normalized } from '../../../src/internal/normalize'
 import { setActiveEntity } from '../../../src/internal/set-active-entity'
 
-
 type TestEntity = {
     id: string
     description: string

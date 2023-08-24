@@ -1,4 +1,4 @@
-import { hydrateActiveId } from "../../../src/internal/hydrate-active-id";
+import { hydrateActiveId } from '../../../src/internal/hydrate-active-id'
 
 const entities = [
     { id: 'abc', description: 'item 1', completed: false },
@@ -18,13 +18,13 @@ const normalized = {
 
 describe('hydrate active id', () => {
     it('hydrates to undefined if not stored value', () => {
-        const hydratedActiveId = hydrateActiveId('test');
-        expect(hydratedActiveId).toEqual(undefined);
-    });
-    
-    it ('hydrates to stored value', () => {
-        window.localStorage.setItem('test', JSON.stringify(normalized));
-        const hydratedActiveId = hydrateActiveId('test');
-        expect(hydratedActiveId).toEqual('abc');
-    });
-});
+        const hydratedActiveId = hydrateActiveId('test')
+        expect(hydratedActiveId).toEqual(undefined)
+    })
+
+    it('hydrates to stored value', () => {
+        window.localStorage.setItem('test', JSON.stringify(normalized))
+        const hydratedActiveId = hydrateActiveId('test')
+        expect(hydratedActiveId).toEqual('abc')
+    })
+})

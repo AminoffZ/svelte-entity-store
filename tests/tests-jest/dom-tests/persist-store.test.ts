@@ -1,6 +1,6 @@
-import { entityStore } from "../../../src"
-import { EntityStore } from "../../../src/entity-store"
-import { Normalized } from "../../../src/internal/normalize"
+import { entityStore } from '../../../src'
+import { EntityStore } from '../../../src/entity-store'
+import { Normalized } from '../../../src/internal/normalize'
 
 type TestEntity = {
     id: string
@@ -25,24 +25,23 @@ const normalized: Normalized<TestEntity> = {
     activeId: undefined,
 }
 
-let store: EntityStore<TestEntity>;
+let store: EntityStore<TestEntity>
 beforeEach(() => {
-    window.localStorage.clear();
-    store = entityStore<TestEntity>(getID, entities, { persist: true, storageKey: 'test' });
-});
-
+    window.localStorage.clear()
+    store = entityStore<TestEntity>(getID, entities, { persist: true, storageKey: 'test' })
+})
 
 describe('persist store', () => {
     it('creates a persistant store', () => {
-        const savedStoreJSON = window.localStorage.getItem('test');
-        const savedStore = JSON.parse(savedStoreJSON || '{}');
-        expect(savedStore).toEqual(normalized);
-    });
+        const savedStoreJSON = window.localStorage.getItem('test')
+        const savedStore = JSON.parse(savedStoreJSON || '{}')
+        expect(savedStore).toEqual(normalized)
+    })
     it('updates the store when an entity is added', () => {
-        const newEntity = { id: 'jkl', description: 'item 4' };
-        store.set(newEntity);
-        const savedStoreJSON = window.localStorage.getItem('test');
-        const savedStore = JSON.parse(savedStoreJSON || '{}');
+        const newEntity = { id: 'jkl', description: 'item 4' }
+        store.set(newEntity)
+        const savedStoreJSON = window.localStorage.getItem('test')
+        const savedStore = JSON.parse(savedStoreJSON || '{}')
         const newNormalized: Normalized<TestEntity> = {
             byId: {
                 ...normalized.byId,
@@ -51,20 +50,19 @@ describe('persist store', () => {
             allIds: [...normalized.allIds, 'jkl'],
             activeId: undefined,
         }
-        expect(savedStore).toEqual(newNormalized);
-    });
+        expect(savedStore).toEqual(newNormalized)
+    })
     it('updates the store when an entity is removed', () => {
-        store.remove('jkl');
-        const savedStoreJSON = window.localStorage.getItem('test');
-        const savedStore = JSON.parse(savedStoreJSON || '{}');
-        expect(savedStore).toEqual(normalized);
-    }
-    );
+        store.remove('jkl')
+        const savedStoreJSON = window.localStorage.getItem('test')
+        const savedStore = JSON.parse(savedStoreJSON || '{}')
+        expect(savedStore).toEqual(normalized)
+    })
     it('updates the store when an entity is updated', () => {
-        const updatedEntity = { id: 'abc', description: 'item 1 updated' };
-        store.set(updatedEntity);
-        const savedStoreJSON = window.localStorage.getItem('test');
-        const savedStore = JSON.parse(savedStoreJSON || '{}');
+        const updatedEntity = { id: 'abc', description: 'item 1 updated' }
+        store.set(updatedEntity)
+        const savedStoreJSON = window.localStorage.getItem('test')
+        const savedStore = JSON.parse(savedStoreJSON || '{}')
         const newNormalized: Normalized<TestEntity> = {
             byId: {
                 ...normalized.byId,
@@ -73,17 +71,17 @@ describe('persist store', () => {
             allIds: normalized.allIds,
             activeId: undefined,
         }
-        expect(savedStore).toEqual(newNormalized);
-    });
+        expect(savedStore).toEqual(newNormalized)
+    })
     it('updates the store when activeId is set', () => {
-        store.setActive('abc');
-        const savedStoreJSON = window.localStorage.getItem('test');
-        const savedStore = JSON.parse(savedStoreJSON || '{}');
+        store.setActive('abc')
+        const savedStoreJSON = window.localStorage.getItem('test')
+        const savedStore = JSON.parse(savedStoreJSON || '{}')
         const newNormalized: Normalized<TestEntity> = {
             byId: normalized.byId,
             allIds: normalized.allIds,
             activeId: 'abc',
         }
-        expect(savedStore).toEqual(newNormalized);
-    });
-});
+        expect(savedStore).toEqual(newNormalized)
+    })
+})

@@ -3,7 +3,6 @@ import * as assert from 'uvu/assert'
 import { getEntities } from '../../../src/internal/get-entities'
 import { Normalized } from '../../../src/internal/normalize'
 
-
 type TestEntity = {
     id: string
     description: string

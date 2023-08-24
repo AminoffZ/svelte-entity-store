@@ -2,7 +2,6 @@ import { test } from 'uvu'
 import * as assert from 'uvu/assert'
 import { normalize } from '../../../src/internal/normalize'
 
-
 type TestEntity = {
     id: string
     description: string
