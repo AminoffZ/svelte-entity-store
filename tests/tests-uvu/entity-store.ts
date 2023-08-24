@@ -1,8 +1,9 @@
 import { get as svelteGet } from 'svelte/store'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { entityStore } from '../src/entity-store'
-import { Normalized } from '../src/internal/normalize'
+import { entityStore } from '../../src'
+import { Normalized } from '../../src/internal/normalize'
+
 
 type TestEntity = {
     id: string

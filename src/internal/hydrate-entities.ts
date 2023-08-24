@@ -19,8 +19,8 @@ export function hydrateEntities<T>(storageKey: string, fallbackValue: T): T
  */
 export function hydrateEntities<T>(storageKey: string, fallbackValue: T[]): T[]
 
-export function hydrateEntities<T>(storageKey: string, fallbackValue?: T | T[]): T | T[] {
-	if (!hasLocalStorage()) return fallbackValue;
+export function hydrateEntities<T>(storageKey: string, fallbackValue: T | T[]): T | T[] {
+	if (!hasLocalStorage()) throw new Error('Cannot hydrate store in a non-browser environment');
 	
 	const storedValue = window.localStorage.getItem(storageKey);
 	if (!storedValue) return fallbackValue;

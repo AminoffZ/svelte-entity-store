@@ -1,6 +1,6 @@
 import { test } from 'uvu'
 import * as assert from 'uvu/assert'
-import { setEntities } from '../../src/internal/set-entities'
+import { setEntities } from '../../../src/internal/set-entities'
 
 type TestEntity = {
     id: string

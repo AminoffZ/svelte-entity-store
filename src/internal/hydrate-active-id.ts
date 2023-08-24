@@ -17,7 +17,6 @@ export function hydrateActiveId<T>(storageKey: string): ID {
 
 	try {
 		const parsedValue: Normalized<T> = JSON.parse(storedValue);
-		
         return parsedValue.activeId;
 	} catch {
 		throw new Error('Could not parse stored value: ' + storedValue);

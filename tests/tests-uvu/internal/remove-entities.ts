@@ -1,7 +1,7 @@
 import { test } from 'uvu'
 import * as assert from 'uvu/assert'
-import { removeEntities } from '../../src/internal/remove-entities'
-import { Normalized } from '../../src/internal/normalize'
+import { removeEntities } from '../../../src/internal/remove-entities'
+import { Normalized } from '../../../src/internal/normalize'
 
 type TestEntity = {
     id: string

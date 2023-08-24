@@ -308,14 +308,18 @@ export function entityStore<T>(getID: GetID<T>, options: EntityStoreOptions): En
 export function entityStore<T>(getID: GetID<T>, initial: T[], options: EntityStoreOptions): EntityStore<T>;
 export function entityStore<T>(getID: GetID<T>, initialOrOptions?: T[] | EntityStoreOptions, options?: EntityStoreOptions): EntityStore<T> {
     let initial: T[] = [];
-
-    if (Array.isArray(initialOrOptions)) {
-        initial = initialOrOptions;
-    } else if (initialOrOptions) {
-        options = initialOrOptions;
+    try {
+        if (Array.isArray(initialOrOptions)) {
+            initial = initialOrOptions;
+        } else if (initialOrOptions) {
+            options = initialOrOptions;
+        }
+        if (options?.persist) {
+            return createPersistantEntityStore<T>(getID, initial, options.storageKey);
+        } 
+        return createEntityStore<T>(getID, initial);
+    } catch (e) {
+        console.error(e);
+        return;
     }
-    if (options.persist) {
-        return createPersistantEntityStore<T>(getID, initial, options.storageKey);
-    } 
-    return createEntityStore<T>(getID, initial);
 }
