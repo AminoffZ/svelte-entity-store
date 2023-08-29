@@ -1,4 +1,4 @@
-import { hydrateEntities } from '../../../src/internal/hydrate-entities'
+import { hydrateFromStore } from '../../../src'
 import { Normalized } from '../../../src/internal/normalize'
 
 type TestEntity = {
@@ -30,14 +30,14 @@ beforeEach(() => {
 
 describe('hydrate entities', () => {
     it("hydrates entities with fallback local storage if they don't exist in localStorage", () => {
-        const hydratedEntities = hydrateEntities('test', entities)
+        const hydratedEntities = hydrateFromStore('test', entities)
         expect(hydratedEntities).toEqual(entities)
     })
     const savedEntities = [...entities, { id: 'jkl', description: 'item 4', completed: false }]
 
     it('hydrates entities with localStorage if they exist in localStorage', () => {
         window.localStorage.setItem('test', JSON.stringify(normalized))
-        const hydratedEntities = hydrateEntities('test', entities)
+        const hydratedEntities = hydrateFromStore('test', entities)
         expect(hydratedEntities).toEqual(savedEntities)
     })
 })

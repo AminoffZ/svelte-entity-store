@@ -9,6 +9,7 @@ Check out the [full docs](https://aminoffz.github.io/svelte-entity-store) for de
 Updated to work with latest version of SvelteKit (tested and working on 4.0.5).
 Added activeId to allow setting and reading an "active" entity similar to [akita](https://opensource.salesforce.com/akita/docs/entities/active/).
 Added persistency option to allow storing the stores in localStorage.
+Expose hydration and peristance methods from and to localstorage to allow custom storage solutions decoupled from the entity pattern.
 
 ## Why?
 
@@ -19,7 +20,7 @@ The goal with `svelte-entity-store` is to provide a simple, generic solution for
 ## Install
 
 ```
-npm install https://github.com/AminoffZ/svelte-entity-store/releases/download/v1.0.7/svelte-entity-store-1.0.7.tgz
+npm install https://github.com/AminoffZ/svelte-entity-store/releases/download/v1.0.8/svelte-entity-store-1.0.8.tgz
 ```
 
 ## Usage

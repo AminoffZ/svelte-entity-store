@@ -8,7 +8,7 @@ import { setActiveEntity } from './internal/set-active-entity'
 import { getEntities } from './internal/get-entities'
 import { getActiveEntity } from './internal/get-active-entity'
 import { getActiveEntityId } from './internal/get-active-entity-id'
-import { hydrateEntities } from './internal/hydrate-entities'
+import { hydrateFromStore } from './internal/hydrate-from-store'
 import { hydrateActiveId } from './internal/hydrate-active-id'
 import { persistStore } from './internal/persist-store'
 
@@ -284,7 +284,7 @@ function createEntityStore<T>(getID: GetID<T>, initial: T[], activeId?: ID) {
  * @returns Entity store
  */
 function createPersistantEntityStore<T>(getID: GetID<T>, initial: T[] = [], key: string) {
-    initial = hydrateEntities<T>(key, initial)
+    initial = hydrateFromStore<T>(key, initial)
     const activeId = hydrateActiveId<T>(key)
     const entityStore = createEntityStore<T>(getID, initial, activeId)
     persistStore<T>(entityStore, key)
