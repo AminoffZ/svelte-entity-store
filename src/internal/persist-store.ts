@@ -1,6 +1,5 @@
-import { EntityStore } from '../entity-store'
+import { Writable } from 'svelte/store'
 import { hasLocalStorage } from '../shared'
-import { Normalized } from './normalize'
 
 /**
  * Persists the store to local storage
@@ -9,9 +8,9 @@ import { Normalized } from './normalize'
  * @param storageKey Key to use for local storage
  * @returns {void}
  */
-export function persistStore<T>(store: EntityStore<T>, storageKey: string) {
+export function persistStore<T, S extends Writable<T>>(store: S, storageKey: string) {
     if (!hasLocalStorage()) throw new Error('Cannot persist store in a non-browser environment')
-    store.subscribe((value: Normalized<T>) => {
+    store.subscribe((value) => {
         const storageValue = JSON.stringify(value)
         window.localStorage.setItem(storageKey, storageValue)
     })

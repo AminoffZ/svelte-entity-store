@@ -25,8 +25,6 @@ npm install https://github.com/AminoffZ/svelte-entity-store/releases/download/v1
 
 ## Usage
 
-> Check out ['/examples'](/examples) for a working TodoMVC demo based on SvelteKit. More to come!
-
 ```ts
 <script lang="ts">
   import { entityStore } from 'svelte-entity-store'
@@ -64,6 +62,35 @@ npm install https://github.com/AminoffZ/svelte-entity-store/releases/download/v1
 {#each $activeTodos as todo (todo.id) }
   // ... render your UI as usual
 {/each}
+```
+
+Without the entity pattern:
+
+```typescript
+// src/lib/shared/stores/audio.store.ts
+
+import { writable } from 'svelte/store'
+import { hydrateFromStore, persistStore } from 'svelte-entity-store'
+
+export type AudioSettings = {
+    master: number
+    music: number
+    sfx: number
+}
+
+const init: AudioSettings = {
+    master: 100,
+    music: 100,
+    sfx: 100,
+}
+
+const hydrated = hydrateFromStore('audioSettings', init)
+
+const audioSettings = writable(hydrated)
+
+persistStore(audioSettings, 'audioSettings')
+
+export default audioSettings
 ```
 
 ## API
@@ -175,3 +202,15 @@ Works just like `update(updater, entities: T[])`, but for each item in the array
 #### update(updater: (entity: T) => T, pred: Predicate<T>)
 
 Runs every entity that matches the predicate through the `updater` callback. The predicate works just like `Array.prototype.filter`, every entity is run through the predicate and if it returns **true** the entity is updated.
+
+### hydrateFromStore<T>(storageKey: string, fallbackValue: T): T
+
+Hydrates the store from localStorage. If no value is found in localStorage, the fallbackValue is returned. This is useful when you want to hydrate an empty store without the entity pattern.
+
+### hydrateFromStore<T>(storageKey: string, fallbackValue: T[]): T[]
+
+Hydrates the store from localStorage. If no value is found in localStorage, the fallbackValue is returned. This is useful when you want to hydrate an empty store with entities.
+
+### persistStore<T, S extends Writable<T>>(store: S, storageKey: string)
+
+Persists the store to localStorage. This is useful when you want to persist the store without the entity pattern.

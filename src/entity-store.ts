@@ -287,7 +287,7 @@ function createPersistantEntityStore<T>(getID: GetID<T>, initial: T[] = [], key:
     initial = hydrateFromStore<T>(key, initial)
     const activeId = hydrateActiveId<T>(key)
     const entityStore = createEntityStore<T>(getID, initial, activeId)
-    persistStore<T>(entityStore, key)
+    persistStore(entityStore, key)
     return entityStore
 }
 
