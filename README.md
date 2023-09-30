@@ -1,5 +1,6 @@
-# Svelte Entity Store
+<img width="192" height="192" src="https://raw.githubusercontent.com/AminoffZ/svelte-entity-store/main/assets/images/icon.svg" align="right" />
 
+# Svelte Entity Store
 A (**w**ork-**i**n-**p**rogress) generic entity store for Svelte projects.
 
 Check out the [full docs](https://aminoffz.github.io/svelte-entity-store) for details.
